@@ -60,7 +60,7 @@ entry: $(ENTRY)
 
 run: $(nemu_BIN) $(USERPROG) entry
 	$(call git_commit, "run")
-	####$(nemu_BIN) $(USERPROG)
+	####$(nemu_BIN) $(USERPROG)####
 
 gdb: $(nemu_BIN) $(USERPROG) entry
 	gdb -s $(nemu_BIN) --args $(nemu_BIN) $(USERPROG)
