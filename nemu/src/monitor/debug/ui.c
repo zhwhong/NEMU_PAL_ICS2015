@@ -100,6 +100,18 @@ static int cmd_info(char *args){
 	return 0;
 }
 
+static int cmd_p(char *args){
+	char *arg = strtok(NULL, " ");
+	if(arg == NULL){
+		printf("There is no expression to calculate!");
+	}
+	else{
+		printf("表达式求值：\n");
+		printf("The value of the expression is ");
+	}
+	return 0;
+}
+
 
 
 static int cmd_help(char *args);
@@ -113,7 +125,8 @@ static struct {
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
 	{"si", "Single execution n step",cmd_si},
-	{"info", "Print program state",cmd_info}
+	{"info", "Print program state",cmd_info},
+	{"p", "Calculate the expression's value", cmd_p}
 
 	/* TODO: Add more commands */
 
