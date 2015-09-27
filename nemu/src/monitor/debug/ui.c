@@ -81,7 +81,14 @@ static int cmd_info(char *args){
 	else if(*arg == 'r'){
 		printf("打印寄存器状态：\n");
 		printf("\teax = %x\n", cpu.eax);
+		printf("\tecx = %x\n", cpu.ecx);
+		printf("\tedx = %x\n", cpu.edx);
 		printf("\tebx = %x\n", cpu.ebx);
+		printf("\tesp = %x\n", cpu.esp);
+		printf("\tebp = %x\n", cpu.ebp);
+		printf("\tesi = %x\n", cpu.esi);
+		printf("\tedi = %x\n", cpu.edi);
+		printf("\n\teip = %x\n", cpu.eip);
 	}
 	else if(*arg == 'w'){
 	    printf("打印监视点信息：\n");
