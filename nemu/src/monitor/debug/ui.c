@@ -79,12 +79,12 @@ static int cmd_info(char *args){
 		printf("Input \"info r\" or \"info w\" to print the program state!\n");
 	}	
 	else if(*arg == 'r'){
-		printf("\t打印寄存器状态：\n");
+		printf("打印寄存器状态：\n");
 		printf("\teax = %x\n", cpu.eax);
 		printf("\tebx = %x\n", cpu.ebx);
 	}
 	else if(*arg == 'w'){
-	    printf("\t打印监视点信息：\n");
+	    printf("打印监视点信息：\n");
 		//printf("");	
 	}
 	else{
