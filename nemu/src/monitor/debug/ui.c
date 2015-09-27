@@ -76,19 +76,19 @@ static int cmd_info(char *args){
 	char *arg = strtok(NULL, " ");
 	
 	if(arg == NULL){
-		printf("Input \"info r\" or \"info w\" to print the program state!");
+		printf("Input \"info r\" or \"info w\" to print the program state!\n");
 	}	
 	else if(*arg == 'r'){
 		printf("打印寄存器状态：\n");
-		printf("eax = %x", cpu.eax);
-		printf("ebx = %x", cpu.ebx);
+		printf("eax = %x\n", cpu.eax);
+		printf("ebx = %x\n", cpu.ebx);
 	}
 	else if(*arg == 'w'){
 	    printf("打印监视点信息：\n");
 		//printf("");	
 	}
 	else{
-		printf("Invalid command!!!");
+		printf("Invalid command!!!\n");
 	}
 	return 0;
 }
