@@ -27,6 +27,21 @@ char* rl_gets() {
 	return line_read;
 }
 
+bool IsNumber(char *str){
+	int i;
+	bool flag = true;
+	for(i = 0; i < strlen(str); i++)
+	{
+		if(str[i] >= '0' && str[i] <= '9')
+			continue;
+		else{
+			flag = false;
+			break;
+		}
+	}
+	return flag;
+}
+
 static int cmd_c(char *args) {
 	cpu_exec(-1);
 	return 0;
@@ -41,11 +56,18 @@ static int cmd_si(char *args){
 	int temp;
 
 	if(arg == NULL){
+		printf("单步执行1步：\n");
 		cpu_exec(1);	
 	}
 	else{
-		temp = atoi(arg);
-		cpu_exec(temp);
+		if(IsNumber(arg)){
+			temp = atoi(arg);
+			printf("单步执行%d步：\n",temp);
+			cpu_exec(temp);
+		}
+		else{
+			printf("Invalid command!!!\n");
+		}
 	}	
 	return 0;
 }
