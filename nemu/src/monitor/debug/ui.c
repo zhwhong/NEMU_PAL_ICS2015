@@ -88,7 +88,7 @@ static int cmd_info(char *args){
 		printf("\tebp = %x\n", cpu.ebp);
 		printf("\tesi = %x\n", cpu.esi);
 		printf("\tedi = %x\n", cpu.edi);
-		printf("\n\teip = %x\n", cpu.eip);
+		printf("\teip = %x\n", cpu.eip);
 	}
 	else if(*arg == 'w'){
 	    printf("打印监视点信息：\n");
