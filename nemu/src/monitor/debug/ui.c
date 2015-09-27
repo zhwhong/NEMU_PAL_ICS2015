@@ -72,6 +72,29 @@ static int cmd_si(char *args){
 	return 0;
 }
 
+static int cmd_info(char *args){
+	char *arg = strtok(NULL, " ");
+	
+	if(arg == NULL){
+		printf("Input \"info r\" or \"info w\" to print the program state!");
+	}	
+	else if(*arg == 'r'){
+		printf("打印寄存器状态：\n");
+		printf("eax = %x", cpu.eax);
+		printf("ebx = %x", cpu.ebx);
+	}
+	else if(*arg == 'w'){
+	    printf("打印监视点信息：\n");
+		//printf("");	
+	}
+	else{
+		printf("Invalid command!!!");
+	}
+	return 0;
+}
+
+
+
 static int cmd_help(char *args);
 
 static struct {
@@ -82,8 +105,8 @@ static struct {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
-	{"si", "Single execution n step",cmd_si}
-
+	{"si", "Single execution n step",cmd_si},
+	{"info", "Print program state",cmd_info}
 
 	/* TODO: Add more commands */
 
