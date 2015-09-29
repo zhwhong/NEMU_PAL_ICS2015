@@ -120,7 +120,25 @@ static int cmd_p(char *args){
 	return 0;
 }
 
+static int cmd_x(char *args){
 
+	return 0;
+}
+
+static int cmd_w(char *args){
+
+	return 0;
+}
+
+static int cmd_d(char *args){
+
+	return 0;
+}
+
+static int cmd_bt(char *args){
+
+	return 0;
+}
 
 static int cmd_help(char *args);
 
@@ -134,7 +152,11 @@ static struct {
 	{ "q", "Exit NEMU", cmd_q },
 	{"si", "Single execution n step",cmd_si},
 	{"info", "Print program state",cmd_info},
-	{"p", "Calculate the expression's value", cmd_p}
+	{"p", "Calculate the expression's value", cmd_p},
+	{"x", "Scan the memory", cmd_x},
+	{"w", "Set the watchpoint", cmd_w},
+	{"d", "Delete the watchpoint", cmd_d},
+	{"bt", "Print the stack list", cmd_bt}
 
 	/* TODO: Add more commands */
 
