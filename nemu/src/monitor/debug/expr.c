@@ -7,7 +7,7 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, EQ
+	NOTYPE = 256, HEX, DEC, REG, EQ, POSITIVE, NEGTIVE, VISIT
 
 	/* TODO: Add more token types */
 
@@ -24,7 +24,16 @@ static struct rule {
 
 	{" +",	NOTYPE},				// spaces
 	{"\\+", '+'},					// plus
+	{"-",  '-'},					// minus
+	{"\\*", '*'},					// multiply
+	{"/", '/'},						// divide
+	{"\\(", '('},					// left parenthesis
+	{")", ')'},						// right parenthesis
+	{"0x[0-9a-fA-F]+",HEX},			// hexadecimal
+	{"[0-9]+",DEC},					// decimal
+	{"\\$[a-zA-Z]+",REG},			// register
 	{"==", EQ}						// equal
+
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -79,6 +88,64 @@ static bool make_token(char *e) {
 				 */
 
 				switch(rules[i].token_type) {
+					case '+':
+						if(nr_token == 0 || tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-' || tokens[nr_token-1].type == '*'
+								|| tokens[nr_token-1].type == '/' || tokens[nr_token-1].type == '(')
+							tokens[nr_token].type = POSITIVE;
+						else{
+							tokens[nr_token].type = '+';
+							strcpy(tokens[nr_token].str, "+");
+						}
+						nr_token++;
+						break;
+					case '-':
+						if(nr_token == 0 || tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-' || tokens[nr_token-1].type == '*' 
+								|| tokens[nr_token-1].type == '/' || tokens[nr_token-1].type == '(')
+                            tokens[nr_token].type = NEGTIVE; 
+						else{ 
+							tokens[nr_token].type = '-';	
+                            strcpy(tokens[nr_token].str, "-"); 
+				        }	
+				        nr_token++; 
+					    break;       
+					case '*':
+						if(nr_token == 0 || tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-' || tokens[nr_token-1].type == '*'
+								|| tokens[nr_token-1].type == '/' || tokens[nr_token-1].type == '(')
+							tokens[nr_token].type = VISIT;
+						else{
+							tokens[nr_token].type = '*';
+							strcpy(tokens[nr_token].str, "*");
+						}
+						nr_token++;
+						break;
+					case '/':
+						tokens[nr_token].type = '/';
+						strcpy(tokens[nr_token].str, "/");
+						nr_token++;
+						break;		
+					case '(':
+						tokens[nr_token].type = '(';
+						strcpy(tokens[nr_token].str, "(");
+						nr_token++;
+						break;
+					case ')':
+						tokens[nr_token].type = ')';
+						strcpy(tokens[nr_token].str, ")");
+						nr_token++;
+						break;
+					case HEX:
+					case DEC:
+					case REG:
+						tokens[nr_token].type = rules[i].token_type;
+						strncpy(tokens[nr_token].str, substr_start, substr_len);
+						nr_token++;
+						break;
+					case EQ:
+
+						break;
+					case NOTYPE:
+
+						break;
 					default: panic("please implement me");
 				}
 
