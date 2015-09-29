@@ -3,6 +3,7 @@
 #include "monitor/watchpoint.h"
 #include "nemu.h"
 
+#include <inttypes.h>
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -111,7 +112,7 @@ static int cmd_p(char *args){
 		temp = expr(arg, &success);
 		if(success){
 			printf("表达式求值：\n");
-			printf("The value of the expression is %ud\n",temp); 
+			printf("The value of the expression is %"PRIu32"\n",temp); 
 		}
 		else{
 			printf("Invalid expression!!!\n");
