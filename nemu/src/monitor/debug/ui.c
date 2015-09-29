@@ -102,12 +102,20 @@ static int cmd_info(char *args){
 
 static int cmd_p(char *args){
 	char *arg = strtok(NULL, " ");
+	bool success = true;
+	uint32_t temp;
 	if(arg == NULL){
 		printf("There is no expression to calculate!\n");
 	}
 	else{
-		printf("表达式求值：\n");
-		printf("The value of the expression is \n");
+		temp = expr(arg, &success);
+		if(success){
+			printf("表达式求值：\n");
+			printf("The value of the expression is %ud\n",temp); 
+		}
+		else{
+			printf("Invalid expression!!!\n");
+		}
 	}
 	return 0;
 }
