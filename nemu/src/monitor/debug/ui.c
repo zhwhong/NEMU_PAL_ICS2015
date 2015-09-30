@@ -81,15 +81,15 @@ static int cmd_info(char *args){
 	}	
 	else if(*arg == 'r'){
 		printf("打印寄存器状态：\n");
-		printf("\teax = %x\n", cpu.eax);
-		printf("\tecx = %x\n", cpu.ecx);
-		printf("\tedx = %x\n", cpu.edx);
-		printf("\tebx = %x\n", cpu.ebx);
-		printf("\tesp = %x\n", cpu.esp);
-		printf("\tebp = %x\n", cpu.ebp);
-		printf("\tesi = %x\n", cpu.esi);
-		printf("\tedi = %x\n", cpu.edi);
-		printf("\teip = %x\n", cpu.eip);
+		printf("\tHEX: eax = %x\tDEC: eax = %u\n", cpu.eax, cpu.eax);
+		printf("\tHEX: ecx = %x\tDEC: ecx = %u\n", cpu.ecx, cpu.ecx);
+		printf("\tHEX: edx = %x\tDEC: edx = %u\n", cpu.edx, cpu.edx);
+		printf("\tHEX: ebx = %x\tDEC: ebx = %u\n", cpu.ebx, cpu.ebx);
+		printf("\tHEX: esp = %x\tDEC: esp = %u\n", cpu.esp, cpu.esp);
+		printf("\tHEX: ebp = %x\tDEC: ebp = %u\n", cpu.ebp, cpu.ebp);
+		printf("\tHEX: esi = %x\tDEC: esi = %u\n", cpu.esi, cpu.esi);
+		printf("\tHEX: edi = %x\tDEC: edi = %u\n", cpu.edi, cpu.edi);
+		printf("\tHEX: eip = %x\tDEC: eip = %u\n", cpu.eip, cpu.eip);
 	}
 	else if(*arg == 'w'){
 	    printf("打印监视点信息：\n");
