@@ -81,15 +81,15 @@ static int cmd_info(char *args){
 	}	
 	else if(*arg == 'r'){
 		printf("打印寄存器状态：\n");
-		printf("\tHEX: eax = %-16xDEC: eax = %u\n", cpu.eax, cpu.eax);
-		printf("\tHEX: ecx = %-16xDEC: ecx = %u\n", cpu.ecx, cpu.ecx);
-		printf("\tHEX: edx = %-16xDEC: edx = %u\n", cpu.edx, cpu.edx);
-		printf("\tHEX: ebx = %-16xDEC: ebx = %u\n", cpu.ebx, cpu.ebx);
-		printf("\tHEX: esp = %-16xDEC: esp = %u\n", cpu.esp, cpu.esp);
-		printf("\tHEX: ebp = %-16xDEC: ebp = %u\n", cpu.ebp, cpu.ebp);
-		printf("\tHEX: esi = %-16xDEC: esi = %u\n", cpu.esi, cpu.esi);
-		printf("\tHEX: edi = %-16xDEC: edi = %u\n", cpu.edi, cpu.edi);
-		printf("\tHEX: eip = %-16xDEC: eip = %u\n", cpu.eip, cpu.eip);
+		printf("\tHEX: eax = 0x%-16xDEC: eax = %u\n", cpu.eax, cpu.eax);
+		printf("\tHEX: ecx = 0x%-16xDEC: ecx = %u\n", cpu.ecx, cpu.ecx);
+		printf("\tHEX: edx = 0x%-16xDEC: edx = %u\n", cpu.edx, cpu.edx);
+		printf("\tHEX: ebx = 0x%-16xDEC: ebx = %u\n", cpu.ebx, cpu.ebx);
+		printf("\tHEX: esp = 0x%-16xDEC: esp = %u\n", cpu.esp, cpu.esp);
+		printf("\tHEX: ebp = 0x%-16xDEC: ebp = %u\n", cpu.ebp, cpu.ebp);
+		printf("\tHEX: esi = 0x%-16xDEC: esi = %u\n", cpu.esi, cpu.esi);
+		printf("\tHEX: edi = 0x%-16xDEC: edi = %u\n", cpu.edi, cpu.edi);
+		printf("\tHEX: eip = 0x%-16xDEC: eip = %u\n", cpu.eip, cpu.eip);
 	}
 	else if(*arg == 'w'){
 	    printf("打印监视点信息：\n");
