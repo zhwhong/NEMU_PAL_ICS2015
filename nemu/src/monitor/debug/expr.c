@@ -179,7 +179,7 @@ static bool make_token(char *e) {
 					case REG:
 						tokens[nr_token].type = REG;
 						strncpy(tokens[nr_token].str, substr_start+1, substr_len-1);
-						*(tokens[nr_token].str + substr_len) = '\0';
+						*(tokens[nr_token].str + substr_len-1) = '\0';
 						strdown(tokens[nr_token].str);
 						nr_token++;
 						break;
