@@ -81,9 +81,9 @@ static int cmd_info(char *args){
 	}	
 	else if(*arg == 'r'){
 		printf("打印寄存器状态：\n");
-		printf("\tHEX: eax = %x\tDEC: eax = %u\n", cpu.eax, cpu.eax);
-		printf("\tHEX: ecx = %x\tDEC: ecx = %u\n", cpu.ecx, cpu.ecx);
-		printf("\tHEX: edx = %x\tDEC: edx = %u\n", cpu.edx, cpu.edx);
+		printf("\tHEX: eax = %16xDEC: eax = %u\n", cpu.eax, cpu.eax);
+		printf("\tHEX: ecx = %16xDEC: ecx = %u\n", cpu.ecx, cpu.ecx);
+		printf("\tHEX: edx = %16xDEC: edx = %u\n", cpu.edx, cpu.edx);
 		printf("\tHEX: ebx = %x\tDEC: ebx = %u\n", cpu.ebx, cpu.ebx);
 		printf("\tHEX: esp = %x\tDEC: esp = %u\n", cpu.esp, cpu.esp);
 		printf("\tHEX: ebp = %x\tDEC: ebp = %u\n", cpu.ebp, cpu.ebp);
