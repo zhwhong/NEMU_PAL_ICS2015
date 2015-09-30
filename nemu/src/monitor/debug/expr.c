@@ -32,7 +32,7 @@ static struct rule {
 	{")", ')'},						// right parenthesis
 	{"0x[0-9a-fA-F]+",HEX},			// hexadecimal
 	{"[0-9]+",DEC},					// decimal
-	{"\\$[a-zA-Z]+",REG},			// register
+	{"\\$[a-zA-Z]{2,3}",REG},			// register
 	{"==", EQ}						// equal
 
 };
@@ -179,6 +179,7 @@ static bool make_token(char *e) {
 						tokens[nr_token].type = REG;
 						strncpy(tokens[nr_token].str, substr_start+1, substr_len-1);
 						strdown(tokens[nr_token].str);
+						nr_token++;
 						break;
 					case EQ:
 
