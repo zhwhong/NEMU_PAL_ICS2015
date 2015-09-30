@@ -72,6 +72,8 @@ static struct reg_rule{
 };
 int nreg_rule = 24;
 
+void strdown(char *str);
+
 static regex_t re[NR_REGEX];
 
 /* Rules are used for many times.
@@ -169,10 +171,14 @@ static bool make_token(char *e) {
 						break;
 					case HEX:
 					case DEC:
-					case REG:
 						tokens[nr_token].type = rules[i].token_type;
 						strncpy(tokens[nr_token].str, substr_start, substr_len);
 						nr_token++;
+						break;
+					case REG:
+						tokens[nr_token].type = REG;
+						strncpy(tokens[nr_token].str, substr_start+1, substr_len-1);
+						strdown(tokens[nr_token].str);
 						break;
 					case EQ:
 
@@ -229,7 +235,7 @@ int compare(char op1, char op2){
 		case '(':
 			switch(op2)
 			{
-				case '+': case '-': case '*': case '/':
+				case '+': case '-': case '*': case '/': case '(':
 					return -1;
 				case ')':
 					return 0;
@@ -263,7 +269,7 @@ void strdown(char *str)
 {
 	if(str == NULL)
 		return;
-	int i = 1;
+	int i = 0;
 	while(str[i] != '\0'){
 		if(str[i] >= 'A' && str[i] <= 'Z')
 			str[i] += 'a' - 'A';
@@ -272,7 +278,7 @@ void strdown(char *str)
 }
 
 uint32_t reg_fetch(int j){
-	return (uint32_t)cpu.gpr[reg_rules[j].subscript]._32 >> reg_rules[j].offset & reg_rules[j].and_num;
+	return (uint32_t)((cpu.gpr[reg_rules[j].subscript]._32 >> reg_rules[j].offset) & reg_rules[j].and_num);
 }
 
 uint32_t expr(char *e, bool *success) {
@@ -284,7 +290,7 @@ uint32_t expr(char *e, bool *success) {
 	uint32_t num_stack[16];
 	Token op_stack[16];
 	Token flag = {'#', "#"};
-	int i = 0;
+	int i = 0, j = 0;
 	int type;
 	tokens[nr_token] = flag;
 	op_stack[0] = flag;
@@ -306,11 +312,10 @@ uint32_t expr(char *e, bool *success) {
 				i++;
 				break;
 			case REG:
-				strdown(tokens[i].str);
-				int j;
+				op1 = 0;
 				for(j = 0; j < nreg_rule; j++)
 				{
-					if(strcmp(tokens[i].str+1, reg_rules[j].name) == 0){
+					if(strcmp(tokens[i].str, reg_rules[j].name) == 0){
 						op1 = reg_fetch(j);
 						break;
 					}
@@ -344,10 +349,9 @@ uint32_t expr(char *e, bool *success) {
 					default:
 						break;
 				}
-
-
-		}
-	}
+				break;
+		}//switch
+	}//while
 	*success = true;
 	return num_stack[s1-1];
 	
