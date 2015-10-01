@@ -5,6 +5,8 @@
 
 typedef struct watchpoint {
 	int NO;
+	char *expr;
+	uint32_t result;
 	struct watchpoint *next;
 
 	/* TODO: Add more members if necessary */

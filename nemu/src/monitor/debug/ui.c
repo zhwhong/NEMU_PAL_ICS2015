@@ -93,7 +93,15 @@ static int cmd_info(char *args){
 	}
 	else if(*arg == 'w'){
 	    printf("打印监视点信息：\n");
-		//printf("");	
+/*		WP *temp = GetHead();
+		if(temp == NULL)
+			printf("The watchpoint list is empyty!!!\n");
+		while(temp)
+		{
+			printf("watchpoint %d: %s\tresult = %u\n", temp->NO, temp->expr, temp->result);
+			temp = temp->next;
+		}
+*/
 	}
 	else{
 		printf("Invalid command!!!\n");
