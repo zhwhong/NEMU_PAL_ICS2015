@@ -278,6 +278,7 @@ void ui_mainloop() {
 		}
 
 		printf("hhhhhhhhh\n");
+		printf("%s\n",args);
 #ifdef HAS_DEVICE
 		extern void sdl_clear_event_queue(void);
 		sdl_clear_event_queue();
