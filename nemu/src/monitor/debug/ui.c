@@ -9,8 +9,6 @@
 #include <readline/history.h>
 
 void cpu_exec(uint32_t);
-WP *new_wp(char *expr, uint32_t result);
-bool free_wp(int num);
 
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
