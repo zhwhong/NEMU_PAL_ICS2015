@@ -68,9 +68,10 @@ static struct reg_rule{
 	{"dh", 2, 8, 0x000000FF},
 	{"dl", 2, 0, 0x000000FF},
 	{"bh", 3, 8, 0x000000FF},
-	{"bl", 3, 0, 0x000000FF}
+	{"bl", 3, 0, 0x000000FF},
+	{"eip",0, 0, 0x00000000}
 };
-int nreg_rule = 24;
+int nreg_rule = 25;
 
 void strdown(char *str);
 
@@ -281,7 +282,10 @@ void strdown(char *str)
 }
 
 uint32_t reg_fetch(int j){
-	return (uint32_t)((cpu.gpr[reg_rules[j].subscript]._32 >> reg_rules[j].offset) & reg_rules[j].and_num);
+	if(j == nreg_rule-1)
+		return (uint32_t)cpu.eip;
+	else
+		return (uint32_t)((cpu.gpr[reg_rules[j].subscript]._32 >> reg_rules[j].offset) & reg_rules[j].and_num);
 }
 
 uint32_t expr(char *e, bool *success) {
