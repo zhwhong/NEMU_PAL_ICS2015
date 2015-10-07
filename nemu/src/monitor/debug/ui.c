@@ -171,7 +171,7 @@ static int cmd_x(char *args){
 	size_t n = 1;
 	char *str_expr, *str_num;
 	swaddr_t addr;
-	int i = 0;
+	int i;
 	bool flag;
 
 	str_num = strtok(NULL, " ");
@@ -191,8 +191,8 @@ static int cmd_x(char *args){
 	addr = expr(str_expr, &flag);
 	if(flag == false)
 		return 0;
-	printf("0x%x:\t",addr);
-	for(i = 0; i < n; i++)
+	//printf("0x%x:\t",addr);
+	for(i = 1; i <= n; i++)
 	{
 		printf("0x%.8x\t", swaddr_read(addr, 4));
 		addr += 4;
