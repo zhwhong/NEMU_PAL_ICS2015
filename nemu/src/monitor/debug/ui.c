@@ -118,7 +118,7 @@ static int cmd_p(char *args){
 		temp = expr(args, &success);
 		if(success){
 			printf("表达式求值：\n");
-			printf("The value of the expression is %"PRIu32"(十进制) or 0x%u(十六进制)\n",temp,temp); 
+			printf("The value of the expression is %"PRIu32"(十进制) or 0x%x(十六进制)\n",temp,temp); 
 		}
 		else{
 			printf("Invalid expression!!!\n");
