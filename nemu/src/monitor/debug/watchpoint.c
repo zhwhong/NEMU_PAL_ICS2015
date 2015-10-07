@@ -23,19 +23,13 @@ void init_wp_list(void)
 
 WP* new_wp(char *expr, uint32_t result)
 {
-	printf("666");
-	printf("555");
 	WP *temp = free_;
-	printf("4444");
 	free_ = free_->next;
-	printf("333");
 	if(head == NULL)
 		temp->NO = 1;
 	else 
 		temp->NO = head->NO + 1;
-	printf("1111");
 	strcpy(temp->expr, expr);
-	printf("222");
 	temp->result = result;
 	temp->next = head;
 	head = temp;
