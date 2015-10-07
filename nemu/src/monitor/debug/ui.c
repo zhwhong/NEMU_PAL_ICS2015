@@ -128,7 +128,10 @@ static int cmd_p(char *args){
 }
 //设置监视点
 static int cmd_w(char *args){
+	char *arg = strtok(NULL, " ");
+	printf("%d\n",atoi(arg));
 	printf("aaaaa");
+
 	if(args == NULL)
 	{
 		printf("There is no expression to set a new watchpoint!!!\n");
