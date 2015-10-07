@@ -142,7 +142,7 @@ static int cmd_w(char *args){
 		return 0;
 	}
 	printf("hello\n");
-	printf("%s",args);
+	printf("%s\n",args);
 	uint32_t result;
 	bool flag;
 	WP *temp;
