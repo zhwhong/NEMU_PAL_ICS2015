@@ -133,6 +133,7 @@ static int cmd_w(char *args){
 		printf("There is no expression to set a new watchpoint!!!\n");
 		return 0;
 	}
+	printf("%s",args);
 	uint32_t result;
 	bool flag;
 	WP *temp;
