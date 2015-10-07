@@ -146,9 +146,9 @@ static int cmd_w(char *args){
 	uint32_t result;
 	bool flag;
 	WP *temp;
-	printf("%s",args);
+	printf("%s\n",args);
 	result = expr(args, &flag);
-	printf("%u",result);
+	printf("%u\n",result);
 	if(flag == false)
 	{
 		printf("The expression is invalid!\n");
