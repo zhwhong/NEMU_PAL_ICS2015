@@ -22,7 +22,7 @@ void init_wp_list() {
 
 WP *new_wp(char *expr, uint32_t result)
 {
-	printf("hello12345");
+	printf("666");
 	printf("555");
 	WP *temp = free_;
 	printf("4444");
