@@ -30,6 +30,7 @@ WP *new_wp(char *expr, uint32_t result)
 		return NULL;
 	}
 	WP *temp = free_;
+	printf("4444");
 	free_ = free_->next;
 	printf("333");
 	if(head == NULL)
