@@ -31,6 +31,7 @@ WP *new_wp(char *expr, uint32_t result)
 	}
 	WP *temp = free_;
 	free_ = free_->next;
+	printf("333");
 	if(head == NULL)
 		temp->NO = 1;
 	else 
