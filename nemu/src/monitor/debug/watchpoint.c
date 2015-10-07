@@ -6,7 +6,8 @@
 static WP wp_list[NR_WP];
 static WP *head, *free_;
 
-void init_wp_list() {
+void init_wp_list(void) 
+{
 	int i;
 	for(i = 0; i < NR_WP; i ++) {
 		wp_list[i].NO = i;
@@ -20,7 +21,7 @@ void init_wp_list() {
 
 /* TODO: Implement the functionality of watchpoint */
 
-WP *new_wp(char *expr, uint32_t result)
+WP* new_wp(char *expr, uint32_t result)
 {
 	printf("666");
 	printf("555");

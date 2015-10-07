@@ -145,6 +145,8 @@ static int cmd_w(char *args){
 	temp = new_wp(args, result);
 	if(temp)
 		printf("成功创建序号为%d的监视点\n",temp->NO);
+	else
+		printf("监视点创建失败!!!\n");
 	return 0;
 }
 
