@@ -196,7 +196,7 @@ static int cmd_x(char *args){
 	{
 		printf("0x%.8x\t", swaddr_read(addr, 4));
 		addr += 4;
-		if(i%3 == 0)
+		if(i%4 == 0)
 			printf("\n");
 	}
 	printf("\n");
