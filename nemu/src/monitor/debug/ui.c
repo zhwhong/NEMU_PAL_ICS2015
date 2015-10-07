@@ -134,14 +134,14 @@ static int cmd_w(char *args){
 	printf("bbbb\n");
 	printf("cccc\n");
 	//printf("%d\n",atoi(arg));
-	printf("aaaaa");
+	printf("aaaaa\n");
 
 	if(args == NULL)
 	{
 		printf("There is no expression to set a new watchpoint!!!\n");
 		return 0;
 	}
-	printf("hello");
+	printf("hello\n");
 	printf("%s",args);
 	uint32_t result;
 	bool flag;
