@@ -276,7 +276,7 @@ void ui_mainloop() {
 		if(args >= str_end) {
 			args = NULL;
 		}
-		printf("%s\n",args);
+		//printf("%s\n",args);
 #ifdef HAS_DEVICE
 		extern void sdl_clear_event_queue(void);
 		sdl_clear_event_queue();
