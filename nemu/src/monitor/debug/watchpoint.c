@@ -23,13 +23,6 @@ void init_wp_list() {
 WP *new_wp(char *expr, uint32_t result)
 {
 	printf("hello\n");
-	/*
-	if(printf("666\n") && NULL == free_)
-	{
-		printf("The watchpoint is full!!!\n");
-		return NULL;
-	}
-	*/
 	printf("555");
 	WP *temp = free_;
 	printf("4444");
