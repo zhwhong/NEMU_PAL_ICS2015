@@ -149,7 +149,19 @@ static int cmd_w(char *args){
 }
 
 static int cmd_d(char *args){
-	
+	if(args == NULL)
+	{
+		printf("Please input the number of the watchpoint you want to delete!\n");
+		return 0;
+	}	
+	int n = atoi(args);
+	if(n<1 || n>32)
+	{
+		printf("The number you input is out of range!!!\n");
+		return 0;
+	}
+	if(free_wp(n))
+		printf("成功删除序号为%d的监视点\n",n);
 	return 0;
 }
 
