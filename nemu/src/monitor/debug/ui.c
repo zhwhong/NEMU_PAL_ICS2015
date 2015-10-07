@@ -154,6 +154,7 @@ static int cmd_w(char *args){
 		printf("The expression is invalid!\n");
 		return 0;
 	}
+	printf("ffff\n");
 	temp = new_wp(args, result);
 	if(temp)
 		printf("成功创建序号为%d的监视点\n",temp->NO);
