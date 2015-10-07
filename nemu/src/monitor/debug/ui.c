@@ -136,6 +136,7 @@ static int cmd_w(char *args){
 	uint32_t result;
 	bool flag;
 	WP *temp;
+	printf("%s",args);
 	result = expr(args, &flag);
 	printf("%u",result);
 	if(flag == false)
