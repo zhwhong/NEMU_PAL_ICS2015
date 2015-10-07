@@ -168,7 +168,36 @@ static int cmd_d(char *args){
 }
 
 static int cmd_x(char *args){
+	size_t n = 1;
+	char *str_expr, *str_num;
+	swaddr_t addr;
+	int i = 0;
+	bool flag;
 
+	str_num = strtok(NULL, " ");
+	if(str_num == NULL)
+	{
+		printf("your input is invalid!!!\n");
+		return 0;
+	}
+	str_expr = strtok(NULL, " ");
+	if(str_expr == NULL)
+	{
+		printf("your input is invalid!!!\n");
+		return 0;
+	}
+
+	n = atoi(str_num);
+	addr = expr(str_expr, &flag);
+	if(flag == false)
+		return 0;
+	printf("0x%x:\t",addr);
+	for(i = 0; i < n; i++)
+	{
+		printf("0x%.8x\t", swaddr_read(addr, 4));
+		addr += 4;
+	}
+	printf("\n");
 	return 0;
 }
 
