@@ -79,7 +79,7 @@ static int cmd_info(char *args){
 	if(arg == NULL){
 		printf("Input \"info r\" or \"info w\" to print the program state!\n");
 	}	
-	else if(*arg == 'r'){
+	else if(strcmp(arg,"r") == 0){
 		printf("打印寄存器状态：\n");
 		printf("\tHEX: eax = 0x%-16xDEC: eax = %u\n", cpu.eax, cpu.eax);
 		printf("\tHEX: ecx = 0x%-16xDEC: ecx = %u\n", cpu.ecx, cpu.ecx);
@@ -91,9 +91,9 @@ static int cmd_info(char *args){
 		printf("\tHEX: edi = 0x%-16xDEC: edi = %u\n", cpu.edi, cpu.edi);
 		printf("\tHEX: eip = 0x%-16xDEC: eip = %u\n", cpu.eip, cpu.eip);
 	}
-	else if(*arg == 'w'){
+	else if(strcmp(arg,"w") == 0){
 	    printf("打印监视点信息：\n");
-/*		WP *temp = GetHead();
+		WP *temp = GetHead();
 		if(temp == NULL)
 			printf("The watchpoint list is empyty!!!\n");
 		while(temp)
@@ -101,7 +101,6 @@ static int cmd_info(char *args){
 			printf("watchpoint %d: %s\tresult = %u\n", temp->NO, temp->expr, temp->result);
 			temp = temp->next;
 		}
-*/
 	}
 	else{
 		printf("Invalid command!!!\n");

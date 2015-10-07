@@ -20,32 +20,24 @@ void init_wp_list() {
 
 /* TODO: Implement the functionality of watchpoint */
 
-WP *new(char *expr, uint32_t result)
+WP *new_wp(char *expr, uint32_t result)
 {
 	if(free_ == NULL)
 	{
 		printf("The watchpoint is full!!!\n");
 		return NULL;
 	}
-	WP *temp = head;
-	if(temp == NULL){
-		head = free_;
-		free_ = free_->next;
-		head->next = NULL;
-		head->NO = 1;
-		strcpy(head->expr, expr);
-		head->result = result;
-		return head;
-	}
-	while(temp->next)
-		temp = temp->next;
-	temp->next = free_;
-	free_->NO = temp->NO + 1;
-	free_->result = result;
-	strcpy(free_->expr, expr);
+	WP *temp = free_;
 	free_ = free_->next;
-	temp->next->next = NULL;
-	return temp->next;
+	if(head == NULL)
+		temp->NO = 1;
+	else 
+		temp->NO = head->NO + 1;
+	strcpy(temp->expr, expr);
+	temp->result = result;
+	temp->next = head;
+	head = temp;
+	return head;
 }
 
 bool free_wp(int num)
@@ -56,10 +48,11 @@ bool free_wp(int num)
 		return false;
 	}
 	WP *temp = head;
-	WP *ptr = head->next;
+	WP *ptr = temp->next;
+
 	if(temp->NO == num)
 	{
-		if(temp->next == NULL)
+		if(ptr == NULL)
 		{
 			head->next = free_;
 			free_ = head;
@@ -71,13 +64,6 @@ bool free_wp(int num)
 			head = head->next;
 			temp->next = free_;
 			free_ = temp;
-			head->NO = 1;
-			temp = head;
-			while(temp->next)
-			{
-				temp->next->NO = temp->NO + 1;
-				temp = temp->next;
-			}
 			return true;
 		}
 	}
@@ -91,14 +77,15 @@ bool free_wp(int num)
 		printf("No such watchpoint!!!\n");
 		return false;
 	}
+	WP *cur = head;
+	while(cur != ptr)
+	{
+		cur->NO--;
+		cur = cur->next;
+	}
 	temp->next = ptr->next;
 	ptr->next = free_;
 	free_ = ptr;
-	while(temp->next)
-	{
-		temp->next->NO = temp->NO + 1;
-		temp = temp->next;
-	}
 	return true;
 }
 
