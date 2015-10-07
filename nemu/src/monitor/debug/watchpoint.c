@@ -21,7 +21,7 @@ void init_wp_list(void)
 
 /* TODO: Implement the functionality of watchpoint */
 
-WP* new_wp(char *expr, uint32_t result)
+WP *new_wp(char *expr, uint32_t result)
 {
 	WP *temp = free_;
 	free_ = free_->next;
