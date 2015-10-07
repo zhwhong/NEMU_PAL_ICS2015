@@ -24,7 +24,7 @@ WP *new_wp(char *expr, uint32_t result)
 {
 	//if(head == NULL)
 		printf("hello\n");
-	if(free_ == NULL  && printf("abcd\n"))
+	if(printf("666\n") && free_ == NULL)
 	{
 		printf("The watchpoint is full!!!\n");
 		return NULL;
