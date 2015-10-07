@@ -22,6 +22,7 @@ void init_wp_list() {
 
 WP *new_wp(char *expr, uint32_t result)
 {
+	printf("%p\n",head);
 	if(free_ == NULL)
 	{
 		printf("The watchpoint is full!!!\n");
