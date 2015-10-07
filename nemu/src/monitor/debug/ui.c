@@ -27,7 +27,7 @@ char* rl_gets() {
 
 	return line_read;
 }
-
+//判断一个字符串是不是数字串
 bool IsNumber(char *str){
 	int i;
 	bool flag = true;
@@ -42,16 +42,16 @@ bool IsNumber(char *str){
 	}
 	return flag;
 }
-
+//继续运行
 static int cmd_c(char *args) {
 	cpu_exec(-1);
 	return 0;
 }
-
+//退出
 static int cmd_q(char *args) {
 	return -1;
 }
-
+//单步执行
 static int cmd_si(char *args){
 	char *arg = strtok(NULL, " ");
 	int temp;
@@ -72,7 +72,7 @@ static int cmd_si(char *args){
 	}	
 	return 0;
 }
-
+//打印寄存器状态和监视点信息
 static int cmd_info(char *args){
 	char *arg = strtok(NULL, " ");
 	
@@ -107,7 +107,7 @@ static int cmd_info(char *args){
 	}
 	return 0;
 }
-
+//表达式求值
 static int cmd_p(char *args){
 	bool success = true;
 	uint32_t temp;
@@ -126,7 +126,7 @@ static int cmd_p(char *args){
 	}
 	return 0;
 }
-
+//设置监视点
 static int cmd_w(char *args){
 	if(args == NULL)
 	{
@@ -149,7 +149,7 @@ static int cmd_w(char *args){
 		printf("监视点创建失败!!!\n");
 	return 0;
 }
-
+//删除监视点
 static int cmd_d(char *args){
 	if(args == NULL)
 	{
@@ -166,7 +166,7 @@ static int cmd_d(char *args){
 		printf("成功删除序号为%d的监视点\n",n);
 	return 0;
 }
-
+//扫描内存
 static int cmd_x(char *args){
 	size_t n = 1;
 	char *str_expr, *str_num;
@@ -202,12 +202,12 @@ static int cmd_x(char *args){
 	printf("\n");
 	return 0;
 }
-
+//打印栈帧链
 static int cmd_bt(char *args){
 
 	return 0;
 }
-
+//帮助信息
 static int cmd_help(char *args);
 
 static struct {
@@ -231,7 +231,7 @@ static struct {
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
-
+//帮助信息
 static int cmd_help(char *args) {
 	/* extract the first argument */
 	char *arg = strtok(NULL, " ");
@@ -254,7 +254,7 @@ static int cmd_help(char *args) {
 	}
 	return 0;
 }
-
+//主循环
 void ui_mainloop() {
 	while(1){
 		char *str = rl_gets();
