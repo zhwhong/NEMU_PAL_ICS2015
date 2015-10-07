@@ -22,8 +22,7 @@ void init_wp_list() {
 
 WP *new_wp(char *expr, uint32_t result)
 {
-	//if(head == NULL)
-		printf("hello\n");
+	printf("hello\n");
 	/*
 	if(printf("666\n") && NULL == free_)
 	{
