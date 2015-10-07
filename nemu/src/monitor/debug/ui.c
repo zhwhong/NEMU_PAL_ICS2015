@@ -131,8 +131,8 @@ static int cmd_w(char *args){
 	char *arg = strtok(NULL, " ");
 	printf("%s",arg);
 	printf("dddd");
-	printf("bbbb\n");
-	printf("cccc");
+	printf("bbbb");
+	printf("cccc\n");
 	//printf("%d\n",atoi(arg));
 	printf("aaaaa");
 
