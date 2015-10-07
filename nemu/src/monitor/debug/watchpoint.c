@@ -22,8 +22,8 @@ void init_wp_list() {
 
 WP *new_wp(char *expr, uint32_t result)
 {
-	if(head == NULL)
-		printf("hello\n");
+	//if(head == NULL)
+	//	printf("hello\n");
 	if(free_ == NULL)
 	{
 		printf("The watchpoint is full!!!\n");
@@ -35,7 +35,9 @@ WP *new_wp(char *expr, uint32_t result)
 		temp->NO = 1;
 	else 
 		temp->NO = head->NO + 1;
+	printf("1111");
 	strcpy(temp->expr, expr);
+	printf("222");
 	temp->result = result;
 	temp->next = head;
 	head = temp;
