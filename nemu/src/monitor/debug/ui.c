@@ -220,7 +220,7 @@ static int cmd_x(char *args){
 		return 0;
 	for(i = 1; i <= n; i++)
 	{
-		printf("0x%8x\t", swaddr_read(addr, 4));
+		printf("0x%x\t", swaddr_read(addr, 4));
 		addr += 4;
 		if(i%4 == 0)
 			printf("\n");
