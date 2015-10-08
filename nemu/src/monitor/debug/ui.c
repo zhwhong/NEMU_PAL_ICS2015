@@ -10,6 +10,19 @@
 
 void cpu_exec(uint32_t);
 
+char* rl_gets();
+bool IsNumber(char *str);
+static int cmd_help(char *args);
+static int cmd_c(char *args);
+static int cmd_q(char *args);
+static int cmd_si(char *args);
+static int cmd_info(char *args);
+static int cmd_p(char *args);
+static int cmd_x(char *args);
+static int cmd_w(char *args);
+static int cmd_d(char *args);
+static int cmd_bt(char *args);
+
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -205,7 +218,6 @@ static int cmd_x(char *args){
 	addr = expr(str_expr, &flag);
 	if(flag == false)
 		return 0;
-	//printf("0x%x:\t",addr);
 	for(i = 1; i <= n; i++)
 	{
 		printf("0x%.8x\t", swaddr_read(addr, 4));
@@ -221,8 +233,6 @@ static int cmd_bt(char *args){
 
 	return 0;
 }
-//帮助信息
-static int cmd_help(char *args);
 
 static struct {
 	char *name;
