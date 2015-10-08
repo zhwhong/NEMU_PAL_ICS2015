@@ -227,7 +227,8 @@ static int cmd_x(char *args){
 		if(i%4 == 0)
 			printf("\n");
 	}
-	printf("\n");
+	if(i%4 != 1)
+		printf("\n");
 	return 0;
 }
 //打印栈帧链
