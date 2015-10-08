@@ -141,12 +141,9 @@ static int cmd_p(char *args){
 }
 //设置监视点
 static int cmd_w(char *args){
-	//char *arg = strtok(NULL, " ");
-	printf("%s",args);
-	printf("dddd\n");
+	printf("dddd");
 	printf("bbbb");
-	printf("cccc\n");
-	//printf("%d\n",atoi(arg));
+	printf("cccc");
 	printf("aaaaa\n");
 
 	if(args == NULL)
