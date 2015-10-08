@@ -23,6 +23,8 @@ void init_wp_list(void)
 
 WP *new_wp(char *expr, uint32_t result)
 {
+	printf("aaaa\n");
+
 	WP *temp = free_;
 	free_ = free_->next;
 	if(head == NULL)
