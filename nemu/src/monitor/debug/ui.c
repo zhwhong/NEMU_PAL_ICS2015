@@ -218,6 +218,8 @@ static int cmd_x(char *args){
 	addr = expr(str_expr, &flag);
 	if(flag == false)
 		return 0;
+	printf("扫描内存起始地址: 0x%x\n以十六进制输出连续%d个四字节如下：\n", addr, n);
+	
 	for(i = 1; i <= n; i++)
 	{
 		printf("0x%.8x\t", swaddr_read(addr, 4));
