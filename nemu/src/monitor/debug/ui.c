@@ -111,7 +111,7 @@ static int cmd_info(char *args){
 			printf("The watchpoint list is empyty!!!\n");
 		while(temp)
 		{
-			printf("watchpoint %d: %s\tresult = %u\n", temp->NO, temp->expr, temp->result);
+			printf("watchpoint %d: expr=\"%s\"\tresult = %u\n", temp->NO, temp->expr, temp->result);
 			temp = temp->next;
 		}
 	}
@@ -156,7 +156,7 @@ static int cmd_w(char *args){
 	}
 	WP *temp = new_wp(args, result);
 	if(temp)
-		printf("成功创建序号为%d的监视点\n",temp->NO);
+		printf("成功创建监视点  序号：%d\t表达式：\"%s\"\n",temp->NO,temp->expr);
 	else
 		printf("监视点创建失败!!!\n");
 	return 0;
