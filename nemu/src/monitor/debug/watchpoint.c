@@ -1,5 +1,6 @@
 #include "monitor/watchpoint.h"
 #include "monitor/expr.h"
+#include <stdlib.h>
 
 #define NR_WP 32
 
@@ -38,7 +39,8 @@ WP *new_wp(char *expr, uint32_t result)
 		printf("5\n");
 	}
 	printf("6\n");
-	//strcpy(temp->expr, expr);
+	temp->expr = (char *)malloc((strlen(expr)+1)*sizeof(char));
+	strcpy(temp->expr, expr);
 	printf("7\n");
 	temp->result = result;
 	printf("8\n");
@@ -61,6 +63,7 @@ bool free_wp(int num)
 
 	if(temp->NO == num)
 	{
+		free(temp->expr);
 		if(ptr == NULL)
 		{
 			head->next = free_;
@@ -92,6 +95,7 @@ bool free_wp(int num)
 		cur->NO--;
 		cur = cur->next;
 	}
+	free(ptr->expr);
 	temp->next = ptr->next;
 	ptr->next = free_;
 	free_ = ptr;
