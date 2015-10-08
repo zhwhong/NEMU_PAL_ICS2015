@@ -23,18 +23,29 @@ void init_wp_list(void)
 
 WP *new_wp(char *expr, uint32_t result)
 {
-	printf("aaaa\n");
+	printf("1\n");
 
 	WP *temp = free_;
+	printf("2\n");
 	free_ = free_->next;
-	if(head == NULL)
+	printf("3\n");
+	if(head == NULL){
 		temp->NO = 1;
-	else 
+		printf("4\n");
+	}
+	else{ 
 		temp->NO = head->NO + 1;
+		printf("5\n");
+	}
+	printf("6\n");
 	strcpy(temp->expr, expr);
+	printf("7\n");
 	temp->result = result;
+	printf("8\n");
 	temp->next = head;
+	printf("9\n");
 	head = temp;
+	printf("10\n");
 	return head;
 }
 
