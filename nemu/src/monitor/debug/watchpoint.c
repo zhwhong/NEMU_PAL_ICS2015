@@ -38,7 +38,7 @@ WP *new_wp(char *expr, uint32_t result)
 		printf("5\n");
 	}
 	printf("6\n");
-	strcpy(temp->expr, expr);
+	//strcpy(temp->expr, expr);
 	printf("7\n");
 	temp->result = result;
 	printf("8\n");
