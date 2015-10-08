@@ -141,32 +141,20 @@ static int cmd_p(char *args){
 }
 //设置监视点
 static int cmd_w(char *args){
-	printf("dddd");
-	printf("bbbb");
-	printf("cccc");
-	printf("aaaaa\n");
-
 	if(args == NULL)
 	{
 		printf("There is no expression to set a new watchpoint!!!\n");
 		return 0;
 	}
-	printf("hello\n");
-	printf("%s\n",args);
 	uint32_t result;
 	bool flag;
-	//WP *temp;
-	printf("%s\n",args);
 	result = expr(args, &flag);
-	printf("%u\n",result);
 	if(flag == false)
 	{
 		printf("The expression is invalid!\n");
 		return 0;
 	}
-	printf("ffff\n");
 	WP *temp = new_wp(args, result);
-	printf("eeee\n");
 	if(temp)
 		printf("成功创建序号为%d的监视点\n",temp->NO);
 	else
