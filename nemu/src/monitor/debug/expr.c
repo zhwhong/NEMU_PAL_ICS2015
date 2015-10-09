@@ -304,7 +304,7 @@ uint32_t expr(char *e, bool *success) {
 	int s1 = 0, s2 = 1;
     uint32_t  op1, op2;
 
-	while(tokens[i].type != '#' || op_stack[s2-1].type != '#')
+	while((tokens[i].type != '#' || op_stack[s2-1].type != '#') && s1>=0 && s2>=1)
 	{
 		switch(tokens[i].type)
 		{
