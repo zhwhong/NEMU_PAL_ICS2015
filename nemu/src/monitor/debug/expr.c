@@ -8,7 +8,7 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, HEX, DEC, REG, EQ, POSITIVE, NEGTIVE, VISIT
+	NOTYPE = 256, EQ, NEQ, AND, OR, NOT, HEX, DEC, REG, NEGTIVE, VISIT
 
 	/* TODO: Add more token types */
 
@@ -28,12 +28,16 @@ static struct rule {
 	{"-",  '-'},					// minus
 	{"\\*", '*'},					// multiply
 	{"/", '/'},						// divide
+	{"==", EQ},						// equal
+	{"!=", NEQ},					// not equal
+	{"\\&{2}", AND},				// logic and
+	{"\\|{2}", OR},					// logic or
+	{"!", NOT},						// not
 	{"\\(", '('},					// left parenthesis
 	{")", ')'},						// right parenthesis
 	{"0x[0-9a-fA-F]+",HEX},			// hexadecimal
 	{"[0-9]+",DEC},					// decimal
-	{"\\$[a-zA-Z]{2,3}",REG},			// register
-	{"==", EQ}						// equal
+	{"\\$[a-zA-Z]{2,3}",REG},		// register
 
 };
 
@@ -128,13 +132,14 @@ static bool make_token(char *e) {
 					case '+':
 						if(nr_token == 0 || tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-' || tokens[nr_token-1].type == '*'
 								|| tokens[nr_token-1].type == '/' || tokens[nr_token-1].type == '(')
-							tokens[nr_token].type = POSITIVE;
+							//tokens[nr_token].type = POSITIVE;
+							break;
 						else{
 							tokens[nr_token].type = '+';
 							strcpy(tokens[nr_token].str, "+");
+							nr_token++;
+							break;
 						}
-						nr_token++;
-						break;
 					case '-':
 						if(nr_token == 0 || tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-' || tokens[nr_token-1].type == '*' 
 								|| tokens[nr_token-1].type == '/' || tokens[nr_token-1].type == '(')
@@ -156,20 +161,13 @@ static bool make_token(char *e) {
 						nr_token++;
 						break;
 					case '/':
-						tokens[nr_token].type = '/';
-						strcpy(tokens[nr_token].str, "/");
-						nr_token++;
-						break;		
 					case '(':
-						tokens[nr_token].type = '(';
-						strcpy(tokens[nr_token].str, "(");
-						nr_token++;
-						break;
 					case ')':
-						tokens[nr_token].type = ')';
-						strcpy(tokens[nr_token].str, ")");
-						nr_token++;
-						break;
+					case EQ:
+					case NEQ:
+					case AND:
+					case OR:
+					case NOT:
 					case HEX:
 					case DEC:
 						tokens[nr_token].type = rules[i].token_type;
@@ -183,9 +181,6 @@ static bool make_token(char *e) {
 						*(tokens[nr_token].str + substr_len-1) = '\0';
 						strdown(tokens[nr_token].str);
 						nr_token++;
-						break;
-					case EQ:
-
 						break;
 					case NOTYPE:
 
