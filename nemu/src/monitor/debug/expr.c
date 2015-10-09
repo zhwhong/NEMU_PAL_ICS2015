@@ -359,9 +359,15 @@ uint32_t expr(char *e, bool *success) {
 				break;
 		}//switch
 	}//while
-	*success = true;
-	return num_stack[s1-1];
-	
+	if(s1 == 1 && s2 == 1){
+		*success = true;
+		return num_stack[--s1];
+	}
+	else
+	{
+		*success = false;
+		return 0;
+	}
 	/* TODO: Insert codes to evaluate the expression. */
 	//panic("please implement me");
 	//return 0;
