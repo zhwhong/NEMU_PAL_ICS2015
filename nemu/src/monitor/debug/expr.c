@@ -173,8 +173,8 @@ static bool make_token(char *e) {
 
 				switch(rules[i].token_type) {
 					case '+':
-						if(nr_token == 0 || tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-' || tokens[nr_token-1].type == '*'
-								|| tokens[nr_token-1].type == '/' || tokens[nr_token-1].type == '(')
+						if(nr_token == 0 || !(tokens[nr_token-1].type == DEC || tokens[nr_token-1].type == HEX || tokens[nr_token-1].type == REG
+								|| tokens[nr_token-1].type == ')'))
 							//tokens[nr_token].type = POSITIVE;
 							break;
 						else{
@@ -184,8 +184,8 @@ static bool make_token(char *e) {
 							break;
 						}
 					case '-':
-						if(nr_token == 0 || tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-' || tokens[nr_token-1].type == '*' 
-								|| tokens[nr_token-1].type == '/' || tokens[nr_token-1].type == '(')
+						if(nr_token == 0 || !(tokens[nr_token-1].type == DEC || tokens[nr_token-1].type == HEX || tokens[nr_token-1].type == REG
+								|| tokens[nr_token-1].type == ')'))
                             tokens[nr_token].type = NEGTIVE; 
 						else{ 
 							tokens[nr_token].type = '-';	
@@ -194,8 +194,8 @@ static bool make_token(char *e) {
 				        nr_token++; 
 					    break;       
 					case '*':
-						if(nr_token == 0 || tokens[nr_token-1].type == '+' || tokens[nr_token-1].type == '-' || tokens[nr_token-1].type == '*'
-								|| tokens[nr_token-1].type == '/' || tokens[nr_token-1].type == '(')
+						if(nr_token == 0 || !(tokens[nr_token-1].type == DEC || tokens[nr_token-1].type == HEX || tokens[nr_token-1].type == REG
+								|| tokens[nr_token-1].type == ')'))
 							tokens[nr_token].type = VISIT;
 						else{
 							tokens[nr_token].type = '*';
@@ -300,11 +300,12 @@ uint32_t expr(char *e, bool *success) {
 						op1 = reg_fetch(j);
 						break;
 					}
-					else{
-						printf("表达式中出现了不合法的寄存器名!!!\n");
-						*success = false;
-						return 0;	
-					}
+				}
+				if(j == nreg_rule)
+				{
+					printf("表达式中出现了不合法的寄存器名!!!\n");
+					*success = false;
+					return 0;	
 				}
 				num_stack[s1++] = op1;
 				i++;
