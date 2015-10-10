@@ -76,7 +76,7 @@ static int cmd_si(char *args){
 	}
 	if(IsNumber(arg)){
 		temp = atoi(arg);
-		printf("成功单步执行%d步\n",temp);
+		printf("单步执行%d步\n",temp);
 		cpu_exec(temp);
 	}
 	else
