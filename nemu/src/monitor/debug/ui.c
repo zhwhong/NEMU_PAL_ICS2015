@@ -70,7 +70,7 @@ static int cmd_si(char *args){
 	int temp;
 
 	if(arg == NULL){
-		printf("单步执行1步：\n");
+		printf("默认单步执行1步：\n");
 		cpu_exec(1);	
 		return 0;
 	}
