@@ -234,7 +234,7 @@ static bool make_token(char *e) {
 						}
 						nr_token++;
 						break;
-					case '/': case '(': case ')': case EQ: case NEQ: case AND: case OR: case NOT: case HEX: case DEC:
+					case '/': case '(': case ')': case EQ: case NEQ: case LL: case LE: case RR: case RE: case AND: case OR: case NOT: case HEX: case DEC:
 						tokens[nr_token].type = rules[i].token_type;
 						strncpy(tokens[nr_token].str, substr_start, substr_len);
 						*(tokens[nr_token].str+substr_len) = '\0';
