@@ -42,6 +42,7 @@ static struct rule {
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
+#define op_num (NR_REGEX-4+3)        //去除 HEX, DEC, REG, NOTYPE, 加上 -(负号), *(取地址), #(辅助使用)
 
 static struct reg_rule{
 	char *name;
@@ -76,6 +77,48 @@ static struct reg_rule{
 	{"eip",0, 0, 0x00000000}
 };
 int nreg_rule = 25;
+
+//'+', '-', '*', '/', AND, OR, NOT, VISIT, NEGTIVE, EQ, NEQ, '(', ')', '#'
+char priority_table[][op_num] = {
+	{'>', '>', '<', '<', '>', '>', '<', '<', '<', '>', '>', '<', '>', '>'},		//'+'
+	{'>', '>', '<', '<', '>', '>', '<', '<', '<', '>', '>', '<', '>', '>'},		//'-'
+	{'>', '>', '>', '>', '>', '>', '<', '<', '<', '>', '>', '<', '>', '>'},		//'*'
+	{'>', '>', '>', '>', '>', '>', '<', '<', '<', '>', '>', '<', '>', '>'},		//'/'
+	{'<', '<', '<', '<', '>', '>', '<', '<', '<', '<', '<', '<', '>', '>'},		//AND
+	{'<', '<', '<', '<', '<', '>', '<', '<', '<', '<', '<', '<', '>', '>'},		//OR
+	{'>', '>', '>', '>', '>', '>', '<', '<', '<', '>', '>', '<', '>', '>'},		//NOT
+	{'>', '>', '>', '>', '>', '>', '<', '<', '<', '>', '>', '<', '>', '>'},		//VISIT
+	{'>', '>', '>', '>', '>', '>', '<', '<', '<', '>', '>', '<', '>', '>'},		//NEGTIVE
+	{'<', '<', '<', '<', '>', '>', '<', '<', '<', '>', '>', '<', '>', '>'},		//EQ
+	{'<', '<', '<', '<', '>', '>', '<', '<', '<', '>', '>', '<', '>', '>'},		//NEQ
+	{'<', '<', '<', '<', '<', '<', '<', '<', '<', '<', '<', '<', '=', '0'},		//'('
+	{'>', '>', '>', '>', '>', '>', '>', '>', '>', '>', '>', '0', '>', '>'},		//')'
+	{'<', '<', '<', '<', '<', '<', '<', '<', '<', '<', '<', '<', '0', '='}		//'#'
+};
+
+int get_subscript(int op)
+{
+	int n = 0;
+	switch(op)
+	{
+		case '+': n = 0; break;
+		case '-': n = 1; break;
+		case '*': n = 2; break;
+		case '/': n = 3; break;
+		case AND: n = 4; break;
+		case OR: n = 5; break;
+		case NOT: n = 6; break;
+		case VISIT: n = 7; break;
+		case NEGTIVE: n = 8; break;
+		case EQ: n = 9; break;
+		case NEQ: n = 10; break;
+		case '(': n = 11; break;
+		case ')': n = 12; break;
+		case '#': n = 13; break;
+		default: break;
+	}
+	return n;
+}
 
 void strdown(char *str);
 
@@ -160,16 +203,7 @@ static bool make_token(char *e) {
 						}
 						nr_token++;
 						break;
-					case '/':
-					case '(':
-					case ')':
-					case EQ:
-					case NEQ:
-					case AND:
-					case OR:
-					case NOT:
-					case HEX:
-					case DEC:
+					case '/': case '(': case ')': case EQ: case NEQ: case AND: case OR: case NOT: case HEX: case DEC:
 						tokens[nr_token].type = rules[i].token_type;
 						strncpy(tokens[nr_token].str, substr_start, substr_len);
 						*(tokens[nr_token].str+substr_len) = '\0';
@@ -183,83 +217,30 @@ static bool make_token(char *e) {
 						nr_token++;
 						break;
 					case NOTYPE:
-
 						break;
 					default: panic("please implement me");
-				}
-
+				}//switch
 				break;
-			}
-		}
+			}//if
+		}//for
 
 		if(i == NR_REGEX) {
 			printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
 			return false;
 		}
-	}
+	}//while
+	/*
 	int k;
 	for(k = 0; k < nr_token; k++){
 		printf("%d\t%s\n", tokens[k].type, tokens[k].str);
 	}
+	*/
 	return true; 
 }
 
-int compare(char op1, char op2){
-	switch(op1)
-	{
-		case '+':
-		case '-':
-			switch(op2)
-			{
-				case '+': case '-': case ')': case '#':
-					return 1;
-				case '*': case '/': case '(':
-					return -1;
-				default:
-					return -2;
-			}
-		case '*':
-		case '/':
-			switch(op2)
-			{
-				case '+': case '-': case '*': case '/': case ')': case '#':
-				    return 1;
-			    case '(':
-					return -1;
-				default:
-					return -2;		
-			}
-		case '(':
-			switch(op2)
-			{
-				case '+': case '-': case '*': case '/': case '(':
-					return -1;
-				case ')':
-					return 0;
-				default:
-					return -2;
-			}
-		case ')':
-			switch(op2)
-			{
-				case '+': case '-': case '*': case '/': case ')': case '#':
-					return 1;
-				default:
-					return -2;
-			}
-		case '#':
-			switch(op2)
-			{
-				case '+': case '-': case '*': case '/': case '(':
-					return -1;
-				case '#':
-					return 0;
-				default:
-					return -2;
-			}
-		default:
-			return -2;
-	}
+//比较栈顶运算符和待入栈运算符的优先级，op1为栈顶运算符，op2为待入栈运算符
+char compare(int op1, int op2){
+	return priority_table[get_subscript(op1)][get_subscript(op2)];
 }
 
 void strdown(char *str)
@@ -319,6 +300,11 @@ uint32_t expr(char *e, bool *success) {
 						op1 = reg_fetch(j);
 						break;
 					}
+					else{
+						printf("表达式中出现了不合法的寄存器名!!!\n");
+						*success = false;
+						return 0;	
+					}
 				}
 				num_stack[s1++] = op1;
 				i++;
@@ -326,24 +312,72 @@ uint32_t expr(char *e, bool *success) {
 			default:
 				switch(compare(op_stack[s2-1].type, tokens[i].type))
 				{
-					case -1:
+					case '<':
 						op_stack[s2++] = tokens[i];
 						i++;
 						break;
-					case 0:
+					case '=':
 						s2--;
 						i++;
 						break;
-					case 1:
+					case '>':
 						//int type;
 						type = op_stack[--s2].type;
-						op2 = num_stack[--s1];
-						op1 = num_stack[--s1];
 						switch(type){
-							case '+': num_stack[s1++] = op1 + op2; break;
-							case '-': num_stack[s1++] = op1 - op2; break;
-							case '*': num_stack[s1++] = op1*op2; break;
-							case '/': num_stack[s1++] = op1/op2; break;
+							case '+':
+								op2 = num_stack[--s1];
+								op1 = num_stack[--s1];
+							   	num_stack[s1++] = op1 + op2; 
+								break;
+							case '-':
+								op2 = num_stack[--s1];
+								op1 = num_stack[--s1];
+							   	num_stack[s1++] = op1 - op2; 
+								break;
+							case '*':
+								op2 = num_stack[--s1];
+								op1 = num_stack[--s1];
+							   	num_stack[s1++] = op1*op2; 
+								break;
+							case '/': 
+								op2 = num_stack[--s1];
+								op1 = num_stack[--s1];
+								num_stack[s1++] = op1/op2; 
+								break;
+							case AND:
+								op2 = num_stack[--s1];
+								op1 = num_stack[--s1];
+								num_stack[s1++] = (op1 && op2);
+								break;
+							case OR:
+								op2 = num_stack[--s1];
+								op1 = num_stack[--s1];
+								num_stack[s1++] = (op1 || op2);
+								break;
+							case NOT:								
+								op1 = num_stack[--s1];
+								num_stack[s1++] = (!op1);
+								break;
+							case VISIT:
+								op1 = num_stack[--s1];
+								num_stack[s1++] = swaddr_read(op1,4);
+								break;
+							case NEGTIVE:
+								op1 = num_stack[--s1];
+								num_stack[s1++] = -op1;
+								break;
+							case EQ:
+								op2 = num_stack[--s1];
+								op1 = num_stack[--s1];
+								num_stack[s1++] = (op1 == op2); 
+								break;
+							case NEQ:
+								op2 = num_stack[--s1];
+								op1 = num_stack[--s1];
+								num_stack[s1++] = (op1 != op2); 
+								break;
+							default:
+								break;
 						}
 						break;
 					default:

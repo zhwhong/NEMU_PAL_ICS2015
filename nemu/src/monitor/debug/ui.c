@@ -132,7 +132,7 @@ static int cmd_p(char *args){
 			printf("HEX: 0x%x\tDEC: %"PRIu32"\n",temp,temp);
 		}
 		else{
-			printf("Invalid expression!!!\n");
+			printf("The expression you input is invalid!!!\n");
 		}
 	}
 	return 0;
