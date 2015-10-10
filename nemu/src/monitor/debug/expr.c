@@ -229,12 +229,7 @@ static bool make_token(char *e) {
 			return false;
 		}
 	}//while
-	/*
-	int k;
-	for(k = 0; k < nr_token; k++){
-		printf("%d\t%s\n", tokens[k].type, tokens[k].str);
-	}
-	*/
+	
 	return true; 
 }
 
