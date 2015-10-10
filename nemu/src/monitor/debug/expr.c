@@ -30,10 +30,10 @@ static struct rule {
 	{"/", '/'},						// divide
 	{"==", EQ},						// equal
 	{"!=", NEQ},					// not equal
-	{"<", LL},						// less than
 	{"<=", LE},						// less or equal
-	{">", RR},						// more than
+	{"<", LL},						// less than
 	{">=", RE},						// more or equal
+	{">", RR},						// more than
 	{"\\&{2}", AND},				// logic and
 	{"\\|{2}", OR},					// logic or
 	{"!", NOT},						// not
