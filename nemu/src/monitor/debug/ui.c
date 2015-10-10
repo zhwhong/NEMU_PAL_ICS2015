@@ -76,11 +76,11 @@ static int cmd_si(char *args){
 	}
 	if(IsNumber(arg)){
 		temp = atoi(arg);
-		printf("单步执行%d步\n",temp);
+		printf("成功单步执行%d步\n",temp);
 		cpu_exec(temp);
 	}
 	else
-		printf("Invalid command!!!\n");	
+		printf("Invalid steps!!!\n");	
 	return 0;
 }
 //打印寄存器状态和监视点信息
