@@ -281,11 +281,11 @@ void strdown(char *str)
 	}
 }
 
-uint32_t reg_fetch(int j){
+int64_t reg_fetch(int j){
 	if(j == nreg_rule-1)
-		return (uint32_t)cpu.eip;
+		return (int64_t)cpu.eip;
 	else
-		return (uint32_t)((cpu.gpr[reg_rules[j].subscript]._32 >> reg_rules[j].offset) & reg_rules[j].and_num);
+		return (int64_t)((cpu.gpr[reg_rules[j].subscript]._32 >> reg_rules[j].offset) & reg_rules[j].and_num);
 }
 
 uint32_t expr(char *e, bool *success) {
@@ -294,7 +294,7 @@ uint32_t expr(char *e, bool *success) {
 		return 0;
 	}
 	
-	uint32_t num_stack[16];
+	int64_t num_stack[16];
 	Token op_stack[16];
 	Token flag = {'#', "#"};
 	int i = 0, j = 0;
@@ -302,19 +302,21 @@ uint32_t expr(char *e, bool *success) {
 	tokens[nr_token] = flag;
 	op_stack[0] = flag;
 	int s1 = 0, s2 = 1;
-    uint32_t  op1, op2;
+    int64_t  op1, op2;
 
 	while((tokens[i].type != '#' || op_stack[s2-1].type != '#') && s1>=0 && s2>=1)
 	{
 		switch(tokens[i].type)
 		{
 			case DEC:
-				sscanf(tokens[i].str, "%"SCNu32"" , &op1);
+				//sscanf(tokens[i].str, "%"SCNu32"" , &op1);
+				sscanf(tokens[i].str, "%"SCNd64"" , &op1);
 				num_stack[s1++] = op1;
 				i++;
 				break;
 			case HEX:
-				sscanf(tokens[i].str, "0x%"SCNx32"", &op1);
+				//sscanf(tokens[i].str, "0x%"SCNx32"", &op1);
+				sscanf(tokens[i].str, "0x%"SCNx64"", &op1);
 				num_stack[s1++] = op1;
 				i++;
 				break;
@@ -435,7 +437,7 @@ uint32_t expr(char *e, bool *success) {
 	}//while
 	if(s1 == 1 && s2 == 1){
 		*success = true;
-		return num_stack[--s1];
+		return (uint32_t)num_stack[--s1];
 	}
 	else
 	{
