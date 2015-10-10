@@ -403,6 +403,26 @@ uint32_t expr(char *e, bool *success) {
 								op1 = num_stack[--s1];
 								num_stack[s1++] = (op1 != op2); 
 								break;
+							case LL:
+								op2 = num_stack[--s1];
+								op1 = num_stack[--s1];
+								num_stack[s1++] = (op1 < op2); 
+								break;
+							case LE:
+								op2 = num_stack[--s1];
+								op1 = num_stack[--s1];
+								num_stack[s1++] = (op1 <= op2); 
+								break;
+							case RR:
+								op2 = num_stack[--s1];
+								op1 = num_stack[--s1];
+								num_stack[s1++] = (op1 > op2); 
+								break;
+							case RE:
+								op2 = num_stack[--s1];
+								op1 = num_stack[--s1];
+								num_stack[s1++] = (op1 >= op2); 
+								break;
 							default:
 								break;
 						}
