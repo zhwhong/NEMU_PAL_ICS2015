@@ -7,7 +7,7 @@
 static WP wp_list[NR_WP];
 static WP *head, *free_;
 
-void init_wp_list(void) 
+void init_wp_list(void)
 {
 	int i;
 	for(i = 0; i < NR_WP; i ++) {
@@ -28,7 +28,7 @@ WP *new_wp(char *expr, uint32_t result)
 	free_ = free_->next;
 	if(head == NULL)
 		temp->NO = 1;
-	else 
+	else
 		temp->NO = head->NO + 1;
 	temp->expr = (char *)malloc((strlen(expr)+1)*sizeof(char));
 	strcpy(temp->expr, expr);
@@ -56,7 +56,7 @@ bool free_wp(int num)
 			head->next = free_;
 			free_ = head;
 			head = NULL;
-			return true;	
+			return true;
 		}
 		else
 		{
