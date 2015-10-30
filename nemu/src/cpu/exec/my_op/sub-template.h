@@ -18,7 +18,7 @@ static void do_execute() {
 
 	cpu.SF = MSB(result);
 	
-
+	cpu.OF = MSB(op_src->val) ? (MSB(op_dest->val) ? 0 : cpu.SF) : (MSB(op_dest->val) ? !cpu.SF : 0);
 
 	print_asm_template2();
 }
