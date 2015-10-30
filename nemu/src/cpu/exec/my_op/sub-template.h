@@ -4,7 +4,6 @@
 
 static void do_execute() {
 	DATA_TYPE result = op_dest->val - op_src->val;
-	OPERAND_W(op_dest, result);
 
 	//set EFLAGS's value
 	cpu.ZF = result ? 0 : 1;
@@ -19,6 +18,8 @@ static void do_execute() {
 	cpu.SF = MSB(result);
 	
 	cpu.OF = MSB(op_src->val) ? (MSB(op_dest->val) ? 0 : cpu.SF) : (MSB(op_dest->val) ? !cpu.SF : 0);
+	
+	OPERAND_W(op_dest, result);
 
 	print_asm_template2();
 }

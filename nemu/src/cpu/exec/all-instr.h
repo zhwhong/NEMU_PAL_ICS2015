@@ -26,5 +26,6 @@
 
 #include "my_op/sub.h"
 #include "my_op/call.h"
+#include "my_op/push.h"
 
 #include "special/special.h"
