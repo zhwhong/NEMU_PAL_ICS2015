@@ -28,5 +28,6 @@
 #include "my_op/call.h"
 #include "my_op/push.h"
 #include "my_op/test.h"
+#include "my_op/je.h"
 
 #include "special/special.h"
