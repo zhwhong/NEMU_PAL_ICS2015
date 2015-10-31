@@ -29,5 +29,6 @@
 #include "my_op/push.h"
 #include "my_op/test.h"
 #include "my_op/je.h"
+#include "my_op/cmp.h"
 
 #include "special/special.h"
