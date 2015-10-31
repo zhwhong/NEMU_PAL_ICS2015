@@ -102,7 +102,7 @@ static int cmd_info(char *args){
 		printf("\tHEX: edi = 0x%-16xDEC: edi = %u\n", cpu.edi, cpu.edi);
 		printf("\tHEX: eip = 0x%-16xDEC: eip = %u\n", cpu.eip, cpu.eip);
 		printf("标志寄存器EFLAGS部分值:\n");
-		printf("ZF = %u\tSF = %u\tCF = %u\tOF = %u\tPF = %u\n", cpu.ZF, cpu.SF, cpu.CF, cpu.OF, cpu.PF);
+		printf("\tZF = %u\tSF = %u\tOF = %u\tCF = %u\tAF = %u\tPF = %u\n", cpu.ZF, cpu.SF, cpu.OF, cpu.CF, cpu.AF, cpu.PF);
 	}
 	else if(strcmp(arg,"w") == 0){
 	    printf("打印监视点信息：\n");
