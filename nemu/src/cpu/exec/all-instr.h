@@ -33,5 +33,6 @@
 
 #include "my_op/jmp.h"
 #include "my_op/jbe.h"
+#include "my_op/add.h"
 
 #include "special/special.h"
