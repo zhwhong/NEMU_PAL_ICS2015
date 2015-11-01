@@ -31,4 +31,6 @@
 #include "my_op/je.h"
 #include "my_op/cmp.h"
 
+#include "my_op/jmp.h"
+
 #include "special/special.h"
