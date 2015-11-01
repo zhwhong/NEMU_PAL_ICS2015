@@ -33,10 +33,10 @@ make_helper(leave){
 }
 
 make_helper(ret){
-	
 	cpu.eip = swaddr_read(cpu.esp, 4);
 	cpu.esp += 4;
-	
+
+	int len = decode_i_l(cpu.eip);
 	print_asm("ret");
-	return 1 + decode_i_l(cpu.eip);
+	return 1 + len;
 }
