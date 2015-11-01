@@ -8,7 +8,7 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, EQ, NEQ, AND, OR, NOT, HEX, DEC, REG, NEGTIVE, VISIT, LL, LE, RR, RE
+	NOTYPE = 256, EQ, NEQ, AND, OR, NOT, HEX, DEC, REG, NEGTIVE, VISIT, LL, LE, RR, RE, VARIABLE
 
 	/* TODO: Add more token types */
 
@@ -42,7 +42,7 @@ static struct rule {
 	{"0x[0-9a-fA-F]+",HEX},			// hexadecimal
 	{"[0-9]+",DEC},					// decimal
 	{"\\$[a-zA-Z]{2,3}",REG},		// register
-
+	{"[a-zA-Z_]+[0-9a-zA-Z_]+", VARIABLE}	// variable
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -234,7 +234,8 @@ static bool make_token(char *e) {
 						}
 						nr_token++;
 						break;
-					case '/': case '(': case ')': case EQ: case NEQ: case LL: case LE: case RR: case RE: case AND: case OR: case NOT: case HEX: case DEC:
+					case '/': case '(': case ')': case EQ: case NEQ: case LL: case LE: case RR: case RE: 
+					case AND: case OR: case NOT: case HEX: case DEC: case VARIABLE:
 						tokens[nr_token].type = rules[i].token_type;
 						strncpy(tokens[nr_token].str, substr_start, substr_len);
 						*(tokens[nr_token].str+substr_len) = '\0';
