@@ -194,7 +194,7 @@ static bool make_token(char *e) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
 
-				//Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
+			//	Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 				position += substr_len;
 
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
@@ -205,7 +205,7 @@ static bool make_token(char *e) {
 				switch(rules[i].token_type) {
 					case '+':
 						if(nr_token == 0 || !(tokens[nr_token-1].type == DEC || tokens[nr_token-1].type == HEX || tokens[nr_token-1].type == REG
-								|| tokens[nr_token-1].type == ')'))
+								|| tokens[nr_token-1].type == VARIABLE || tokens[nr_token-1].type == ')'))
 							//tokens[nr_token].type = POSITIVE;
 							break;
 						else{
@@ -216,7 +216,7 @@ static bool make_token(char *e) {
 						}
 					case '-':
 						if(nr_token == 0 || !(tokens[nr_token-1].type == DEC || tokens[nr_token-1].type == HEX || tokens[nr_token-1].type == REG
-								|| tokens[nr_token-1].type == ')'))
+								|| tokens[nr_token-1].type == VARIABLE || tokens[nr_token-1].type == ')'))
                             tokens[nr_token].type = NEGTIVE; 
 						else{ 
 							tokens[nr_token].type = '-';	
@@ -226,7 +226,7 @@ static bool make_token(char *e) {
 					    break;       
 					case '*':
 						if(nr_token == 0 || !(tokens[nr_token-1].type == DEC || tokens[nr_token-1].type == HEX || tokens[nr_token-1].type == REG
-								|| tokens[nr_token-1].type == ')'))
+								|| tokens[nr_token-1].type == VARIABLE || tokens[nr_token-1].type == ')'))
 							tokens[nr_token].type = VISIT;
 						else{
 							tokens[nr_token].type = '*';
