@@ -261,6 +261,12 @@ static bool make_token(char *e) {
 			return false;
 		}
 	}//while
+
+	int num;
+	for(num = 0; num<nr_token; num++)
+	{
+		printf("%s\n", tokens[num].str);
+	}
 	
 	return true; 
 }
