@@ -131,7 +131,7 @@ static int cmd_p(char *args){
 		temp = expr(args, &success);
 		if(success){
 			printf("表达式求值结果：\n");
-			printf("HEX: 0x%x\t\tDEC: %"PRIu32"\n",temp,temp);
+			printf("\tHEX: 0x%x\t\tDEC: %"PRIu32"\n",temp,temp);
 		}
 		else{
 			printf("The expression you input is invalid!!!\n");
