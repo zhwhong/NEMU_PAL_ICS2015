@@ -251,7 +251,7 @@ static int cmd_bt(char *args){
 		temp.begin_addr = 0;
 		temp.prev_ebp = swaddr_read(temp_ebp, 4);
 		temp.cur_addr = temp.ret_addr ? temp.ret_addr : cpu.eip;
-		for(i = i - 1 ; i >= 0; i--){
+		for(--i ; i >= 0; i--){
 			if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC && temp.cur_addr >= symtab[i].st_value && temp.cur_addr <= symtab[i].st_value + symtab[i].st_size){
 				strcmp(temp.func_name, (char *)&strtab[symtab[i].st_name]);
 				temp.begin_addr = symtab[i].st_value;
