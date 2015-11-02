@@ -233,7 +233,7 @@ static int cmd_x(char *args){
 //打印栈帧链
 static int cmd_bt(char *args){
 	if(args != NULL){
-		printf("your input is invalid!!! (You can input just like \"bt\"\n");
+		printf("your input is invalid!!! (You can input just like \"bt\"\ni)");
 		return 0;
 	}
 	int i = nr_symtab_entry;
@@ -257,11 +257,11 @@ static int cmd_bt(char *args){
 				temp.begin_addr = symtab[i].st_value;
 			}
 		}
-		if(temp_ebp + 4 >= 0x80000000)
+		if(temp_ebp + 4 == 0x80000000)
 			break;
 		temp.ret_addr = swaddr_read(temp_ebp+4, 4);
 		for(i = 0; i < 5; i++){
-			if(temp_ebp + 8 + 4*i >= 0x80000000)
+			if(temp_ebp + 8 + 4*i == 0x80000000)
 				while(i < 5)
 					temp.args[i++] = 0;
 			else
