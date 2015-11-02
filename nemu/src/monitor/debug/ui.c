@@ -245,7 +245,7 @@ static int cmd_bt(char *args){
 	uint32_t temp_ebp = cpu.ebp;
 	PartOfStackFrame temp;
 	temp.ret_addr = 0;
-	while(temp_ebp != 0)
+	do
 	{
 		temp.func_name[0] = '\0';
 		temp.begin_addr = 0;
@@ -270,7 +270,7 @@ static int cmd_bt(char *args){
 		temp_ebp = temp.prev_ebp;
 		printf("#%d   0x%08x in %s(%d,%d,%d,%d,%d)\n",num, temp.begin_addr, temp.func_name, temp.args[0],temp.args[1],temp.args[2],temp.args[3],temp.args[4]);
 		num++;
-	}
+	}while(temp_ebp != 0);
 	return 0;
 }
 
