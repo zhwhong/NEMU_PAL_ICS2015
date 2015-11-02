@@ -238,7 +238,7 @@ static int cmd_bt(char *args){
 	}
 	int i = nr_symtab_entry;
     if(cpu.ebp == 0 || cpu.eip == 0x100000 || i <= 0){	
-		printf("No Stack! The program is not being run!\n");
+		printf("No Stack!\n");
 		return 0;
 	}
 	int num = 0;
