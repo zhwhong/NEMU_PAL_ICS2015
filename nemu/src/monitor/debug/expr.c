@@ -361,6 +361,7 @@ uint32_t expr(char *e, bool *success) {
 						}
 					}
 				}	
+				printf("aaaa\n");
 				if(j == nr_symtab_entry){
 					printf("表达式中出现了不合法的变量名!!!\n");
 					*success = false;
