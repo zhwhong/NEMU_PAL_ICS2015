@@ -233,7 +233,7 @@ static int cmd_x(char *args){
 //打印栈帧链
 static int cmd_bt(char *args){
 	if(args != NULL){
-		printf("your input is invalid!!! (You can input just like \"bt\"\ni)");
+		printf("your input is invalid!!! (You can input just like \"bt\")\n");
 		return 0;
 	}
 	int i = nr_symtab_entry;
