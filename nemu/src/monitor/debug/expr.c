@@ -353,9 +353,10 @@ uint32_t expr(char *e, bool *success) {
 				i++;
 				break;
 			case VARIABLE:
+				printf("Symtab_entry:%d\n", nr_symtab_entry);
 				for(j = 0; j < nr_symtab_entry; j++){
-					//if(symtab[j].st_info == STT_OBJECT){
 					printf("symtab[%d].st_info: %d\t%s\n", j, symtab[j].st_info, strtab+symtab[j].st_name);
+					//if(symtab[j].st_info == STT_OBJECT){
 					if(symtab[j].st_info == 17){
 						if(strcmp(tokens[i].str, strtab+symtab[j].st_name) == 0){
 							op1 = symtab[j].st_value;
@@ -363,7 +364,6 @@ uint32_t expr(char *e, bool *success) {
 						}
 					}
 				}	
-				printf("Symtab_entry:%d\n", nr_symtab_entry);
 				if(j == nr_symtab_entry){
 					printf("表达式中出现了不合法的变量名!!!\n");
 					*success = false;
