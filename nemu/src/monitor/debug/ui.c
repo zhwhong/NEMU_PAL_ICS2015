@@ -253,7 +253,7 @@ static int cmd_bt(char *args){
 		temp.cur_addr = temp.ret_addr ? temp.ret_addr : cpu.eip;
 		for(--i ; i >= 0; i--){
 			if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC && temp.cur_addr >= symtab[i].st_value && temp.cur_addr <= symtab[i].st_value + symtab[i].st_size){
-				strcmp(temp.func_name, (char *)&strtab[symtab[i].st_name]);
+				strcpy(temp.func_name, (char *)&strtab[symtab[i].st_name]);
 				temp.begin_addr = symtab[i].st_value;
 			}
 		}
