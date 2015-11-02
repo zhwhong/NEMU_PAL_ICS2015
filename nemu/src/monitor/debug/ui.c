@@ -260,17 +260,17 @@ static int cmd_bt(char *args){
 		if(temp_ebp + 4 == 0x80000000)
 			break;
 		temp.ret_addr = swaddr_read(temp_ebp+4, 4);
-		/*
-		for(i = 0; i < 5; i++){
+		
+		for(i = 0; i < 4; i++){
 			if(temp_ebp + 8 + 4*i == 0x80000000)
-				while(i < 5)
+				while(i < 4)
 					temp.args[i++] = 0;
 			else
 				temp.args[i] = swaddr_read(temp_ebp + 8 + 4*i, 4);
-		}*/
+		}
 		temp_ebp = temp.prev_ebp;
-		printf("#%d   0x%08x in %s()\n",num, temp.begin_addr, temp.func_name); 
-		//printf("#%d   0x%08x in %s(%d,%d,%d,%d,%d)\n",num, temp.begin_addr, temp.func_name, temp.args[0],temp.args[1],temp.args[2],temp.args[3],temp.args[4]);
+		//printf("#%d   0x%08x in %s()\n",num, temp.begin_addr, temp.func_name); 
+		printf("#%d   0x%08x in %s(%d,%d,%d,%d,%d)\n",num, temp.begin_addr, temp.func_name, temp.args[0],temp.args[1],temp.args[2],temp.args[3],temp.args[4]);
 		num++;
 	}
 	return 0;
