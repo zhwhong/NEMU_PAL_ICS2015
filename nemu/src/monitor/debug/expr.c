@@ -353,14 +353,11 @@ uint32_t expr(char *e, bool *success) {
 				i++;
 				break;
 			case VARIABLE:
-				printf("STT_OBJECT: %d\n", STT_OBJECT);
 				for(j = 0; j < nr_symtab_entry; j++){
 					//if(symtab[j].st_info == STT_OBJECT){
 					printf("symtab[%d].st_info: %d\t%s\n", j, symtab[j].st_info, strtab+symtab[j].st_name);
 					if(symtab[j].st_info == 17){
-						printf("success1!!!\n");
 						if(strcmp(tokens[i].str, strtab+symtab[j].st_name) == 0){
-							printf("success2!!!\n");
 							op1 = symtab[j].st_value;
 							break;
 						}
