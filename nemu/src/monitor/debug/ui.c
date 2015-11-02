@@ -237,8 +237,8 @@ static int cmd_bt(char *args){
 		return 0;
 	}
 	int i = nr_symtab_entry;
-    if(i <= 0){	
-		printf("Stack is not exit!\n");
+    if(i <= 0 || cpu.eip == 0x100000){	
+		printf("No Stack!\n");
 		return 0;
 	}
 	int num = 0;
