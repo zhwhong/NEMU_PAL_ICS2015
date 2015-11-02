@@ -7,6 +7,20 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <elf.h>
+
+extern char *strtab;
+extern Elf32_Sym *symtab;
+extern int nr_symtab_entry;
+
+typedef struct {
+	swaddr_t prev_ebp;
+	swaddr_t cur_addr;
+	char func_name[30];
+	swaddr_t begin_addr;
+	swaddr_t ret_addr;
+	uint32_t args[5];
+} PartOfStackFrame;
 
 void cpu_exec(uint32_t);
 
@@ -218,7 +232,45 @@ static int cmd_x(char *args){
 }
 //打印栈帧链
 static int cmd_bt(char *args){
-
+	if(args != NULL){
+		printf("your input is invalid!!! (You can input just like \"bt\"\n");
+		return 0;
+	}
+	int i = nr_symtab_entry;
+    if(i <= 0){	
+		printf("Stack is not exit!\n");
+		return 0;
+	}
+	int num = 0;
+	uint32_t temp_ebp = cpu.ebp;
+	PartOfStackFrame temp;
+	temp.ret_addr = 0;
+	while(temp_ebp != 0)
+	{
+		temp.func_name[0] = '\0';
+		temp.begin_addr = 0;
+		temp.prev_ebp = swaddr_read(temp_ebp, 4);
+		temp.cur_addr = temp.ret_addr ? temp.ret_addr : cpu.eip;
+		for(i = i - 1 ; i >= 0; i--){
+			if(ELF32_ST_TYPE(symtab[i].st_info) == STT_FUNC && temp.cur_addr >= symtab[i].st_value && temp.cur_addr <= symtab[i].st_value + symtab[i].st_size){
+				strcmp(temp.func_name, (char *)&strtab[symtab[i].st_name]);
+				temp.begin_addr = symtab[i].st_value;
+			}
+		}
+		if(temp_ebp + 4 >= 0x80000000)
+			break;
+		temp.ret_addr = swaddr_read(temp_ebp+4, 4);
+		for(i = 0; i < 5; i++){
+			if(temp_ebp + 8 + 4*i >= 0x80000000)
+				while(i < 5)
+					temp.args[i++] = 0;
+			else
+				temp.args[i] = swaddr_read(temp_ebp + 8 + 4*i, 4);
+		}
+		temp_ebp = temp.prev_ebp;
+		printf("#%d   0x%08x in %s(%d,%d,%d,%d,%d)\n",num, temp.begin_addr, temp.func_name, temp.args[0],temp.args[1],temp.args[2],temp.args[3],temp.args[4]);
+		num++;
+	}
 	return 0;
 }
 
