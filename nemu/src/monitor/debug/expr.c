@@ -1,11 +1,16 @@
 #include "nemu.h"
 #include <inttypes.h>
+#include <elf.h>
 
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <sys/types.h>
 #include <regex.h>
+
+extern char *strtab;
+extern Elf32_Sym *symtab;
+extern int nr_symtab_entry;
 
 enum {
 	NOTYPE = 256, EQ, NEQ, AND, OR, NOT, HEX, DEC, REG, NEGTIVE, VISIT, LL, LE, RR, RE, VARIABLE
@@ -346,6 +351,9 @@ uint32_t expr(char *e, bool *success) {
 				}
 				num_stack[s1++] = op1;
 				i++;
+				break;
+			case VARIABLE:
+				
 				break;
 			default:
 				switch(compare(op_stack[s2-1].type, tokens[i].type))
