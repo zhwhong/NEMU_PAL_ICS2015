@@ -353,7 +353,21 @@ uint32_t expr(char *e, bool *success) {
 				i++;
 				break;
 			case VARIABLE:
-				
+				for(j = 0; j < nr_symtab_entry; j++){
+					if(symtab[j].st_info == STT_OBJECT){
+						if(strcmp(tokens[i].str, strtab+symtab[j].st_name) == 0){
+							op1 = symtab[j].st_value;
+							break;
+						}
+					}
+				}	
+				if(j == nr_symtab_entry){
+					printf("表达式中出现了不合法的变量名!!!\n");
+					*success = false;
+					return 0;	
+				}
+				num_stack[s1++] = op1;
+				i++;
 				break;
 			default:
 				switch(compare(op_stack[s2-1].type, tokens[i].type))
