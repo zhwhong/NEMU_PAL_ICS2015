@@ -271,7 +271,7 @@ static int cmd_bt(char *args){
 		}
 		temp_ebp = temp.prev_ebp;
 		//printf("#%d   0x%08x in %s()\n",num, temp.begin_addr, temp.func_name); 
-		printf("#%d   0x%08x in %s (%8d,%8d,%8d,%8d)\n",num, temp.begin_addr, temp.func_name, temp.args[0], temp.args[1], temp.args[2], temp.args[3]);
+		printf("#%d   0x%08x  in  %s (%d,%d,%d,%d)\n",num, temp.begin_addr, temp.func_name, temp.args[0], temp.args[1], temp.args[2], temp.args[3]);
 		num++;
 	}
 	return 0;
