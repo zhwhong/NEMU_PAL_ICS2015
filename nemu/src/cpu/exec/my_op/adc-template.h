@@ -22,7 +22,7 @@ static void do_execute() {
 		if(result == 0 || (MSB(op_dest->val + op_src->val) == 0 && MSB(result) == 1))
 			cpu.OF = 1;
 		else
-		    cpu.OF = MSB(op_src->val) ? (MSB(op_dest->val) ? !cpu.SF : 0) : (MSB(op_dest->val) ? 0 : cpu.SF);
+		    cpu.OF = MSB(op_src->val) ? (MSB(op_dest->val) ? !(MSB(result-1)) : 0) : (MSB(op_dest->val) ? 0 : MSB(result-1));
 	}
 	OPERAND_W(op_dest, result);
 
