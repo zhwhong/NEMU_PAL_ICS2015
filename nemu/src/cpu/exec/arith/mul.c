@@ -14,4 +14,4 @@
 
 /* for instruction encoding overloading */
 
-make_helper_v(mul_rm)
+make_helper_v(mul_rm2a)
