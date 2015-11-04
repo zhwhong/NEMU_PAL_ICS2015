@@ -33,8 +33,7 @@ make_helper(concat(decode_si_, SUFFIX)) {
 	op_src->simm = ???
 	 */
 #if DATA_BYTE == 1
-	int8_t temp = (int8_t)instr_fetch(eip,DATA_BYTE);
-	op_src->simm = (int32_t)temp;
+	op_src->simm = (int32_t)(int8_t)instr_fetch(eip,DATA_BYTE);
 #else
 	op_src->simm = (int32_t)instr_fetch(eip,DATA_BYTE);
 #endif

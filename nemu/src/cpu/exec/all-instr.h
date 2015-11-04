@@ -28,11 +28,10 @@
 #include "my_op/call.h"
 #include "my_op/push.h"
 #include "my_op/test.h"
-#include "my_op/je.h"
 #include "my_op/cmp.h"
 
 #include "my_op/jmp.h"
-#include "my_op/jbe.h"
+#include "my_op/jcc.h"
 #include "my_op/add.h"
 
 #include "my_op/pop.h"
