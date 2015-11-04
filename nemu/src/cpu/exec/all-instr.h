@@ -35,4 +35,10 @@
 #include "my_op/jbe.h"
 #include "my_op/add.h"
 
+#include "my_op/pop.h"
+#include "my_op/movsx.h"
+#include "my_op/movzx.h"
+#include "my_op/adc.h"
+#include "my_op/sbb.h"
+
 #include "special/special.h"
