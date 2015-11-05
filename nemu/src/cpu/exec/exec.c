@@ -80,7 +80,7 @@ make_group(group4,
 /* 0xff */
 make_group(group5,
 	inc_rm_v, dec_rm_v, inv, inv, 
-	inv, inv, push_rm_v, inv)
+	jmp_rm_v, inv, push_rm_v, inv)
 
 make_group(group6,
 	inv, inv, inv, inv, 
@@ -197,10 +197,10 @@ helper_fun _2byte_opcode_table [256] = {
 /* 0x84 */	jcc_i_v/*je_i_v*/, jcc_i_v/*jne_i_v*/, jcc_i_v/*jbe_i_v*/, jcc_i_v/*ja_i_v*/,
 /* 0x88 */	jcc_i_v/*js_i_v*/, jcc_i_v/*jns_i_v*/, jcc_i_v/*jp_i_v*/, jcc_i_v/*jnp_i_v*/,
 /* 0x8c */	jcc_i_v/*jl_i_v*/, jcc_i_v/*jge_i_v*/, jcc_i_v/*jle_i_v*/, jcc_i_v/*jg_i_v*/,
-/* 0x90 */	inv, inv, inv, inv,
-/* 0x94 */	inv, inv, inv, inv,
-/* 0x98 */	inv, inv, inv, inv, 
-/* 0x9c */	inv, inv, inv, inv, 
+/* 0x90 */	setcc_rm_b, setcc_rm_b, setcc_rm_b, setcc_rm_b,
+/* 0x94 */	setcc_rm_b, setcc_rm_b, setcc_rm_b, setcc_rm_b,
+/* 0x98 */	setcc_rm_b, setcc_rm_b, setcc_rm_b, setcc_rm_b, 
+/* 0x9c */	setcc_rm_b, setcc_rm_b, setcc_rm_b, setcc_rm_b, 
 /* 0xa0 */	inv, inv, inv, inv, 
 /* 0xa4 */	inv, inv, inv, inv,
 /* 0xa8 */	inv, inv, inv, inv,

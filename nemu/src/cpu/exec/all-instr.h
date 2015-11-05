@@ -39,5 +39,6 @@
 #include "my_op/movzx.h"
 #include "my_op/adc.h"
 #include "my_op/sbb.h"
+#include "my_op/setcc.h"
 
 #include "special/special.h"

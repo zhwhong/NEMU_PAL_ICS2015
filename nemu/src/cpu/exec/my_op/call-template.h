@@ -19,12 +19,12 @@ static void do_execute() {
 		if(DATA_BYTE == 2){
 			cpu.esp -= 2;
 			MEM_W(cpu.esp, (uint16_t)(cpu.eip & 0x0000ffff));
-			cpu.eip = op_src->val & 0x0000ffff;
+			cpu.eip = (op_src->val & 0x0000ffff) - 2;
 		}
 		else if(DATA_BYTE == 4){
 			cpu.esp -= 4;
 			MEM_W(cpu.esp, cpu.eip);
-			cpu.eip = op_src->val;
+			cpu.eip = op_src->val - 2;
 		}
 	}
 	print_asm_template1();
