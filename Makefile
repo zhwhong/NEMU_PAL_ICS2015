@@ -52,7 +52,7 @@ clean: clean-cpp
 
 ##### some convinient rules #####
 
-USERPROG := obj/testcase/leap-year
+USERPROG := obj/testcase/max
 ENTRY := $(USERPROG)
 
 entry: $(ENTRY)
