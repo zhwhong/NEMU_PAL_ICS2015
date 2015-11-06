@@ -132,7 +132,7 @@ helper_fun opcode_table [256] = {
 /* 0x8c */	inv, lea, inv, pop_rm_v,
 /* 0x90 */	xchg_a2r_v, inv, inv, inv,
 /* 0x94 */	inv, inv, inv, inv,
-/* 0x98 */	inv, inv, inv, inv,
+/* 0x98 */	inv, cwd, inv, inv,
 /* 0x9c */	inv, inv, inv, inv,
 /* 0xa0 */	mov_moffs2a_b, mov_moffs2a_v, mov_a2moffs_b, mov_a2moffs_v,
 /* 0xa4 */	inv, inv, inv, inv,
@@ -157,7 +157,7 @@ helper_fun opcode_table [256] = {
 /* 0xf0 */	inv, inv, inv, inv,
 /* 0xf4 */	inv, inv, group3_b, group3_v,
 /* 0xf8 */	inv, inv, inv, inv,
-/* 0xfc */	inv, inv, group4, group5
+/* 0xfc */	cld, inv, group4, group5
 };
 
 helper_fun _2byte_opcode_table [256] = {
