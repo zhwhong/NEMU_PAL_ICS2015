@@ -194,7 +194,7 @@ static int cmd_d(char *args){
 }
 //扫描内存
 static int cmd_x(char *args){
-	size_t n = 1;
+	int n = 1;
 	char *str_expr, *str_num;
 	swaddr_t addr;
 	int i;
