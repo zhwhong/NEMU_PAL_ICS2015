@@ -41,3 +41,30 @@ make_helper(ret){
 	//return 1 + len;
 	return 5;
 }
+
+make_helper(cld)
+{
+	cpu.DF = 0;
+	print_asm("cld");
+	return 1;
+}
+
+make_helper(cwd)
+{
+	if(!ops_decoded.is_data_size_16)
+	{
+		if((cpu.eax>>31) == 1)
+			cpu.edx = 0xffffffff;
+		else
+			cpu.edx = 0x00000000;
+	}
+	else
+	{
+		if((cpu.gpr[0]._16 >> 15) == 1)
+			cpu.gpr[2]._16 = 0xffff;
+		else
+			cpu.gpr[2]._16 = 0x0000;
+	}
+	print_asm("cwd");
+	return 1;
+}
