@@ -42,6 +42,16 @@ make_helper(ret){
 	return 5;
 }
 
+make_helper(ret_i_w){
+	cpu.eip = swaddr_read(cpu.esp, 4);
+	cpu.esp += (4 + op_src->val);
+
+	//int len = decode_i_l(cpu.eip);
+	print_asm("reti");
+	//return 1 + len;
+	return 5;
+}
+
 make_helper(stos_b)
 {
 	swaddr_write(cpu.edi, 1, cpu.gpr[0]._8[0]);
