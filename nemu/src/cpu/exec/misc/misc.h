@@ -7,6 +7,7 @@ make_helper(lea);
 make_helper(leave);
 make_helper(ret);
 make_helper(cld);
+make_helper(clc);
 make_helper(cwd);
 make_helper(stos_b);
 make_helper(stos_v);

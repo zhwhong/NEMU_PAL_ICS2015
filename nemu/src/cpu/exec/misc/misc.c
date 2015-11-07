@@ -156,8 +156,8 @@ make_helper(cmps_v)
 			cpu.edi -= 2;
 	}
 	else{
-		uint32_t temp_esi = cpu.esi & 0xffff;
-		uint32_t temp_edi = cpu.edi & 0xffff;
+		uint32_t temp_esi = cpu.esi;
+		uint32_t temp_edi = cpu.edi;
 		uint32_t result = temp_esi - temp_edi;
 
 		//set EFLAGS's value
@@ -185,6 +185,13 @@ make_helper(cld)
 {
 	cpu.DF = 0;
 	print_asm("cld");
+	return 1;
+}
+
+make_helper(clc)
+{
+	cpu.CF = 0;
+	print_asm("clc");
 	return 1;
 }
 
