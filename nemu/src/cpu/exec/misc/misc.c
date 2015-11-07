@@ -104,6 +104,83 @@ make_helper(movs_v)
 	return 1;
 }
 
+make_helper(cmps_b)
+{
+	uint8_t temp_esi = cpu.esi & 0xff;
+	uint8_t temp_edi = cpu.edi & 0xff;
+	uint8_t result = temp_esi - temp_edi;
+
+	//set EFLAGS's value
+	cpu.ZF = result ? 0 : 1;
+	cpu.CF = (temp_esi >= temp_edi) ? 0 : 1;
+	cpu.AF = ((uint8_t)(temp_esi & 0x0f) >= (uint8_t)(temp_edi & 0x0f)) ? 0 : 1;
+
+	uint8_t low_b = result & 0xff;
+	cpu.PF = !((low_b & 0x01)^(low_b>>1 & 0x01)^(low_b>>2 & 0x01)^(low_b>>3 & 0x01)^(low_b>>4 & 0x01)^(low_b>>5 & 0x01)^(low_b>>6 & 0x01)^(low_b>>7 & 0x01));
+
+	cpu.SF = result>>7;
+	
+	cpu.OF = (temp_edi>>7) ? ((cpu.esi>>7) ? 0 : cpu.SF) : ((cpu.esi>>7) ? !cpu.SF : 0);
+
+	if(cpu.DF == 0)
+		cpu.edi += 1;
+	else
+		cpu.edi -= 1;
+
+	print_asm("movsb");
+	return 1;
+}
+
+make_helper(cmps_v)
+{
+	if(ops_decoded.is_data_size_16){
+		uint16_t temp_esi = cpu.esi & 0xffff;
+		uint16_t temp_edi = cpu.edi & 0xffff;
+		uint16_t result = temp_esi - temp_edi;
+
+		//set EFLAGS's value
+		cpu.ZF = result ? 0 : 1;
+		cpu.CF = (temp_esi >= temp_edi) ? 0 : 1;
+		cpu.AF = ((uint8_t)(temp_esi & 0x0f) >= (uint8_t)(temp_edi & 0x0f)) ? 0 : 1;
+
+		uint8_t low_b = result & 0xff;
+		cpu.PF = !((low_b & 0x01)^(low_b>>1 & 0x01)^(low_b>>2 & 0x01)^(low_b>>3 & 0x01)^(low_b>>4 & 0x01)^(low_b>>5 & 0x01)^(low_b>>6 & 0x01)^(low_b>>7 & 0x01));
+
+		cpu.SF = result>>15;
+	
+		cpu.OF = (temp_edi>>15) ? ((cpu.esi>>15) ? 0 : cpu.SF) : ((cpu.esi>>15) ? !cpu.SF : 0);
+	
+		if(cpu.DF == 0)
+			cpu.edi += 2;
+		else
+			cpu.edi -= 2;
+	}
+	else{
+		uint32_t temp_esi = cpu.esi & 0xffff;
+		uint32_t temp_edi = cpu.edi & 0xffff;
+		uint32_t result = temp_esi - temp_edi;
+
+		//set EFLAGS's value
+		cpu.ZF = result ? 0 : 1;
+		cpu.CF = (temp_esi >= temp_edi) ? 0 : 1;
+		cpu.AF = ((uint8_t)(temp_esi & 0x0f) >= (uint8_t)(temp_edi & 0x0f)) ? 0 : 1;
+
+		uint8_t low_b = result & 0xff;
+		cpu.PF = !((low_b & 0x01)^(low_b>>1 & 0x01)^(low_b>>2 & 0x01)^(low_b>>3 & 0x01)^(low_b>>4 & 0x01)^(low_b>>5 & 0x01)^(low_b>>6 & 0x01)^(low_b>>7 & 0x01));
+
+		cpu.SF = result>>31;
+	
+		cpu.OF = (temp_edi>>31) ? ((cpu.esi>>31) ? 0 : cpu.SF) : ((cpu.esi>>31) ? !cpu.SF : 0);
+
+		if(cpu.DF == 0)
+			cpu.edi += 4;
+		else
+			cpu.edi -= 4;
+	}
+	print_asm("movsv");
+	return 1;
+}
+
 make_helper(cld)
 {
 	cpu.DF = 0;
