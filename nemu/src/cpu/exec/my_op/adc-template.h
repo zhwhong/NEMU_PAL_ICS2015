@@ -19,7 +19,7 @@ static void do_execute() {
 	if(cpu.CF == 0)	
 		cpu.OF = MSB(op_src->val) ? (MSB(op_dest->val) ? !cpu.SF : 0) : (MSB(op_dest->val) ? 0 : cpu.SF);
 	else{
-		if(result == 0 || (MSB(op_dest->val + op_src->val) == 0 && MSB(result) == 1))
+		if((MSB(op_dest->val + op_src->val) == 0 && MSB(result) == 1))
 			cpu.OF = 1;
 		else
 		    cpu.OF = MSB(op_src->val) ? (MSB(op_dest->val) ? !(MSB(result-1)) : 0) : (MSB(op_dest->val) ? 0 : MSB(result-1));
