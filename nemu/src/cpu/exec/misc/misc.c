@@ -214,3 +214,15 @@ make_helper(cwd)
 	print_asm("cwd");
 	return 1;
 }
+
+/*
+make_helper(cltd){
+	if(cpu.eax >> 31)
+		cpu.edx = 0x00000000;
+	else
+		cpu.eax = 0xffffffff;
+
+	print_asm("cltd");
+	return 1;
+*/
+
