@@ -10,5 +10,7 @@ make_helper(cld);
 make_helper(cwd);
 make_helper(stos_b);
 make_helper(stos_v);
+make_helper(movs_b);
+make_helper(movs_v);
 
 #endif

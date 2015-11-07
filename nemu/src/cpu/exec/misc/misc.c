@@ -57,14 +57,14 @@ make_helper(stos_v)
 {
 	if(ops_decoded.is_data_size_16){
 		swaddr_write(cpu.edi, 2, cpu.gpr[0]._16);
-		if(cpu.DF == 1)
+		if(cpu.DF == 0)
 			cpu.edi += 2;
 		else
 			cpu.edi -= 2;
 	}
 	else{
 		swaddr_write(cpu.edi, 4, cpu.eax);
-		if(cpu.DF == 1)
+		if(cpu.DF == 0)
 			cpu.edi += 4;
 		else
 			cpu.edi -= 4;
@@ -73,6 +73,36 @@ make_helper(stos_v)
 	return 1;
 }
 
+make_helper(movs_b)
+{
+	swaddr_write(cpu.edi, 1, cpu.esi);
+	if(cpu.DF == 0)
+		cpu.edi += 1;
+	else
+		cpu.edi -= 1;
+	print_asm("movsb");
+	return 1;
+}
+
+make_helper(movs_v)
+{
+	if(ops_decoded.is_data_size_16){
+		swaddr_write(cpu.edi, 2, cpu.esi);
+		if(cpu.DF == 0)
+			cpu.edi += 2;
+		else
+			cpu.edi -= 2;
+	}
+	else{
+		swaddr_write(cpu.edi, 4, cpu.esi);
+		if(cpu.DF == 0)
+			cpu.edi += 4;
+		else
+			cpu.edi -= 4;
+	}
+	print_asm("movsv");
+	return 1;
+}
 
 make_helper(cld)
 {
