@@ -105,7 +105,7 @@ make_helper(concat(decode_rm2a_, SUFFIX)) {
 }
 
 make_helper(concat(decode_m_, SUFFIX)){
-	return decode_rm_internal(eip ,op_src, op_src2);
+	return decode_rm_internal(eip ,op_src, op_dest);
 }
 ////////////////////////////////////////////////////
 
