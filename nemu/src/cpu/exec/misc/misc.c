@@ -225,7 +225,7 @@ make_helper(cwd)
 	return 1;
 }
 
-
+/*
 make_helper(cltd){
 	if(cpu.eax >> 31)
 		cpu.edx = 0x00000000;
@@ -235,4 +235,4 @@ make_helper(cltd){
 	print_asm("cltd");
 	return 1;
 }
-
+*/
