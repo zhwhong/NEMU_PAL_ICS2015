@@ -1,6 +1,6 @@
 #include "trap.h"
 
-#define N 20
+#define N 10
 
 struct dummy {
 	int pad1[N];
