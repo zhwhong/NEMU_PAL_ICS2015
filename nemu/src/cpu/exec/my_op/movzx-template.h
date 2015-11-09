@@ -17,7 +17,8 @@ static void do_execute() {
 			break;
 	}
 
-	OPERAND_W(op_dest, result);
+	//OPERAND_W(op_dest, result);
+	write_operand_l(op_dest, result);
 	print_asm_template2();
 	/*
 	if(DATA_BYTE == 1){
