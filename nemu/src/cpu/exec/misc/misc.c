@@ -32,22 +32,10 @@ make_helper(leave){
 	return 1;
 }
 
+
 make_helper(ret){
 	cpu.eip = swaddr_read(cpu.esp, 4);
 	cpu.esp += 4;
-/*
-	if(DATA_BYTE == 2){
-		cpu.eip = MEM_R(cpu.esp);
-		cpu.esp += 2;
-		cpu.eip &= 0x0000ffff;
-	}
-	else{
-		cpu.eip = MEM_R(cpu.esp);
-		cpu.esp += 4;
-	}
-
-	cpu.esp += op_src ->val;
-*/
 	//int len = decode_i_l(cpu.eip);
 	print_asm("ret");
 	//return 1 + len;
@@ -245,6 +233,18 @@ make_helper(cltd){
 		cpu.eax = 0xffffffff;
 
 	print_asm("cltd");
+	return 1;
+}
+*/
+/*
+make_helper(ctd_v){
+	if(ops_decoded.is_data_size_16){
+		if( (reg_w(R_AX) & 0x8000 ) == 0) reg_w(R_DX) = 0x0;
+		else reg_w(R_DX) = 0xffff;
+	}else{
+		if( (reg_l(R_EAX) & 0x80000000 ) == 0) reg_l(R_EDX) = 0x0;
+		else reg_l(R_EDX) = 0xffffffff;
+	}
 	return 1;
 }
 */
