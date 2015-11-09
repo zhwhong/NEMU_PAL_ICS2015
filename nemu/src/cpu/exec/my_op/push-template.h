@@ -7,10 +7,12 @@ static void do_execute() {
 		cpu.esp -= 2;
 		MEM_W(cpu.esp, op_src->val);
 	}
-	else if(DATA_BYTE == 4){
+	//else if(DATA_BYTE == 4){
+	else{
 		cpu.esp -= 4;
 		MEM_W(cpu.esp, op_src->val);
 	}
+	
 	print_asm_template1();
 }
 
