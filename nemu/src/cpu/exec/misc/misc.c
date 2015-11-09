@@ -52,6 +52,7 @@ make_helper(ret_i_w){
 	return 5;
 }
 
+/*
 make_helper(stos_b)
 {
 	swaddr_write(cpu.edi, 1, cpu.gpr[0]._8[0]);
@@ -190,6 +191,7 @@ make_helper(cmps_v)
 	print_asm("movsv");
 	return 1;
 }
+*/
 
 make_helper(cld)
 {
