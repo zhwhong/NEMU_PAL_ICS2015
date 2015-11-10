@@ -8,18 +8,20 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	return (temp_a * temp_b) >> 16;
 }
 
-/*
+
+
 FLOAT F_div_F(FLOAT a, FLOAT b) {
 	int s = 0;
 	s = (a < 0) ? !s : s;
-	int64_t _a = (a < 0) ? -a : a;
+	long long _a = (a < 0) ? -a : a;
 	s = (b < 0) ? !s : s;
-	int64_t _b = (b < 0) ? -b : b;
-	int64_t _q = 0;
+	long long _b = (b < 0) ? -b : b;
+	long long _p = ((a << 12) / (b >> 2)) << 2;
+	long long _q = 0;
 	_a <<= 32;
 	_b <<= 32;
 	int shl = 0, shr = 0;
-	while ((_b > _a) && ((_b >> 1) <= _a)){
+	while (_b > _a){
 		_b >>= 1;
 		++shr;
 	}
@@ -28,7 +30,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 		++shl;
 	}
 
-	return ((a << 12) / (b >> 2)) << 2;
+	int len = 0;
 	while (_b){
 		if (_a >= _b){
 			_a = _a - _b;
@@ -38,19 +40,34 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 			_q = _q << 1;
 			_b >>= 1;
 		}
+		++len;
+	}	
+	if (49 >= len)
+		shl += 49 - len;
+	else
+		shr += len - 49;
+	while (shr){
+		_q >>= 1;
+		--shr;
 	}
-	_q = (_q << shl) >> (shr);
+	while (shl){
+		_q <<= 1;
+		--shl;
+	}
+	_q >>= 32;
+
 	_q = s ? -_q : _q;
 
 	return _q;
 }
-*/
 
+/*
 FLOAT F_div_F(FLOAT a, FLOAT b) {
 	nemu_assert(b);
 	int result = a /b * (1<<16);
 	return result + a%b;
 }
+*/
 
 FLOAT f2F(float a) {
 
