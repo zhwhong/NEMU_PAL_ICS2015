@@ -9,7 +9,7 @@ make_helper(ret);
 make_helper(ret_i_w);
 make_helper(cld);
 make_helper(clc);
-make_helper(cltd);
+//make_helper(cltd);
 make_helper(cwd);
 //make_helper(stos_b);
 //make_helper(stos_v);
