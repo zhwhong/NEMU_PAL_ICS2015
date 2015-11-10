@@ -8,6 +8,7 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	return (temp_a * temp_b) >> 16;
 }
 
+/*
 FLOAT F_div_F(FLOAT a, FLOAT b) {
 	int s = 0;
 	s = (a < 0) ? !s : s;
@@ -43,6 +44,13 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 
 	return _q;
 }
+*/
+
+FLOAT F_div_F(FLOAT a, FLOAT b) {
+	nemu_assert(b);
+	int result = a /b * (1<<16);
+	return result + a%b;
+}
 
 FLOAT f2F(float a) {
 
@@ -68,7 +76,7 @@ FLOAT f2F(float a) {
 			float_E -= 0x7e;
 			temp_off = len_M - float_E - 16;
 
-			if(temp >= 0)
+			if(temp_off >= 0)
 				float_M >>= temp_off;
 			else
 				float_M <<= -temp_off;
@@ -91,9 +99,9 @@ FLOAT f2F(float a) {
 		temp_off = 16 - len_M + float_E;
 
 		if (temp_off >= 0)
-			m <<= temp_off;
+			float_M <<= temp_off;
 		else
-			m >>= -temp_off;
+			float_M >>= -temp_off;
 
 		if(float_S == 1)
 			float_M = -float_M;
