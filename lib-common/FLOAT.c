@@ -63,10 +63,39 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 }
 */
 
+/*
 FLOAT F_div_F(FLOAT a, FLOAT b) {
 	nemu_assert(b);
 	int result = a /b * (1<<16);
 	return result + a%b;
+}
+*/
+FLOAT F_div_F(FLOAT a, FLOAT b) {
+	nemu_assert(b);
+	int sign = 0;
+	sign = (a < 0) ? 1 : 0;
+	long long remain = (a < 0) ? -a : a;
+	long long divisor = (b < 0) ? -b : b;
+	sign = (b < 0) ? !sign : sign;
+	
+	int count;
+	FLOAT result = 0;
+	remain <<= 16;
+	divisor <<= 16;
+	count = 16;
+	while(remain != 0){
+		if(remain >= divisor){
+			remain -= divisor;
+			result |= (1 << count);
+		}
+		if(count == 0)
+			break;
+		divisor >>= 1;
+		count--;
+	}
+	if(sign == 1)
+		result = -result;
+	return result;
 }
 
 
