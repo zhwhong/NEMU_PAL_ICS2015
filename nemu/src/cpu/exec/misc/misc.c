@@ -38,7 +38,7 @@ make_helper(ret){
 	//int len = decode_i_l(cpu.eip);
 	print_asm("ret");
 	//return 1 + len;
-	return 5;
+	return 0;
 }
 
 make_helper(ret_i_w){
@@ -48,7 +48,7 @@ make_helper(ret_i_w){
 	//int len = decode_i_l(cpu.eip);
 	print_asm("reti");
 	//return 1 + len;
-	return 5;
+	return 0;
 }
 
 make_helper(cld)
