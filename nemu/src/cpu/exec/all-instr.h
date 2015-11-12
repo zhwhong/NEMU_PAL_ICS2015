@@ -43,5 +43,6 @@
 #include "my_op/adc.h"
 #include "my_op/sbb.h"
 #include "my_op/setcc.h"
+#include "my_op/cmov.h"
 
 #include "special/special.h"
