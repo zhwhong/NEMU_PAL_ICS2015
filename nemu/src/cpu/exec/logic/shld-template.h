@@ -11,7 +11,7 @@ static void do_execute () {
 	count &= 0x1f;
 	while(count != 0) {
 		out <<= 1;
-		out |= (in) >> ((DATA_BYTE << 3) - 1);
+		out |= (in >> ((DATA_BYTE << 3) - 1)) & 1;
 		in <<= 1;
 		count --;
 	}
