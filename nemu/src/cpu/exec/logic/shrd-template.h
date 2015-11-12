@@ -10,11 +10,17 @@ static void do_execute () {
 	uint8_t count = op_src->val;
 	count &= 0x1f;
 	while(count != 0) {
+		cpu.CF = out & 1;
 		out >>= 1;
 		out |= (in & 1) << ((DATA_BYTE << 3) - 1);
 		in >>= 1;
 		count --;
 	}
+
+	cpu.SF = (out >> ((DATA_BYTE << 3) - 1)) & 1;
+	cpu.ZF = out ? 0 : 1;
+	uint8_t low_b = out & 0xff;
+	cpu.PF = !((low_b & 0x01)^(low_b>>1 & 0x01)^(low_b>>2 & 0x01)^(low_b>>3 & 0x01)^(low_b>>4 & 0x01)^(low_b>>5 & 0x01)^(low_b>>6 & 0x01)^(low_b>>7 & 0x01));
 
 	OPERAND_W(op_src2, out);
 
