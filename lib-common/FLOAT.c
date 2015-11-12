@@ -83,7 +83,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 			result |= (1 << count);
 		}
 		*/
-		while(remain >= divisor){
+		while(remain >= divisor && remain > 0){
 			remain -= divisor;
 			result += (1 << count);
 		}
