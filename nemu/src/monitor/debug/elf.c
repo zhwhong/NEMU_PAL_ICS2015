@@ -26,7 +26,7 @@ void load_elf_tables(int argc, char *argv[]) {
 	 * They should contain the ELF header and program headers. */
 	ret = fread(buf, 4096, 1, fp);
 	//assert(ret == 1);
-	assert(ret == 0);
+	assert(ret != 0);
 
 	/* The first several bytes contain the ELF header. */
 	Elf32_Ehdr *elf = (void *)buf;
