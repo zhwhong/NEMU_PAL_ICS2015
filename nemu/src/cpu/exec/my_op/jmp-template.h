@@ -49,7 +49,7 @@ static void do_execute() {
 	make_helper(concat(jmp_rm_, SUFFIX)){
 	concat(decode_rm_, SUFFIX)(eip + 1);
 	if(2 == DATA_BYTE){
-		cpu.eip = ( op_src->val) & 0x0000ffff;
+		cpu.eip = op_src->val & 0x0000ffff;
 	}
 	else if(4 == DATA_BYTE){
 		cpu.eip =  op_src->val;
