@@ -4,12 +4,12 @@
 
 static void do_execute() {
 
-	/*
+	
 	cpu.eip += op_src->val;
 	if(DATA_BYTE == 2){
 		cpu.eip &= 0x0000ffff ;
 	}
-	*/
+	/*
 	switch (ops_decoded.opcode & 0xff){
 		case 0xe9:
 		case 0xeb:
@@ -29,15 +29,15 @@ static void do_execute() {
 			cpu.eip -= 2;
 			break;
 	}
-	
+	*/
 	print_asm_template1();
 }
 
 	make_instr_helper(i)
 
 #if DATA_BYTE == 2 || DATA_BYTE == 4
-	make_instr_helper(rm)
-	/*
+	//make_instr_helper(rm)
+	
 	make_helper(concat(jmp_rm_, SUFFIX))
 	{
 		concat(decode_rm_, SUFFIX)(eip + 1);
@@ -50,7 +50,6 @@ static void do_execute() {
 		}
 		return 0;
 	}
-	*/
 	
 #endif
 
