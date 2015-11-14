@@ -37,7 +37,7 @@ uint32_t loader() {
 
 	/* Load each program segment */
 	//panic("please implement me");
-	nemu_assert(0);
+	//nemu_assert(0);
 
 	ph = (Elf32_Phdr *)(void *)(buf + elf->e_phoff);
 
