@@ -55,7 +55,6 @@ uint32_t loader() {
 			 */
 			 memset((void *)(ph->p_vaddr+ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
 
-
 #ifdef IA32_PAGE
 			/* Record the program break for future use. */
 			extern uint32_t brk;
