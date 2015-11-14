@@ -25,7 +25,7 @@ void load_elf_tables(int argc, char *argv[]) {
 	/* Read the first 4096 bytes from the exec_file.
 	 * They should contain the ELF header and program headers. */
 	ret = fread(buf, 4096, 1, fp);
-	printf("%d\n", ret);
+	
 	assert(ret == 1);
 	//assert(ret != 0);
 
