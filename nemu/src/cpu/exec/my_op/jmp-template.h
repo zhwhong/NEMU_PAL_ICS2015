@@ -4,11 +4,14 @@
 
 static void do_execute() {
 
-	
+	if (DATA_BYTE == 1)
+		op_src->val = (uint32_t)(int32_t)(int8_t)op_src->val;
+	else if (DATA_BYTE == 2)
+		op_src->val = (uint32_t)(int32_t)(int16_t)op_src->val;
+
 	cpu.eip += op_src->val;
-	if(DATA_BYTE == 2){
-		cpu.eip &= 0x0000ffff ;
-	}
+	if (DATA_BYTE == 2)
+		cpu.eip &= 0x0000ffff;
 	/*
 	switch (ops_decoded.opcode & 0xff){
 		case 0xe9:
