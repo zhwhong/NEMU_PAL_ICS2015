@@ -37,6 +37,8 @@ uint32_t loader() {
 
 	/* Load each program segment */
 	//panic("please implement me");
+	nemu_assert(0);
+
 	ph = (Elf32_Phdr *)(void *)(buf + elf->e_phoff);
 
 	for(i = 0; i < elf->e_phnum; i++, ph++) {
