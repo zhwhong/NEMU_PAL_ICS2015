@@ -2,8 +2,8 @@
 
 //uint32_t dram_read(hwaddr_t, size_t);
 //void dram_write(hwaddr_t, size_t, uint32_t);
-uint32_t L1cache_read(hwaddr_t addr, size_t len);
-void L1cache_write(hwaddr_t addr, size_t len, uint32_t data);
+uint32_t L1cache_read(hwaddr_t, size_t);
+void L1cache_write(hwaddr_t, size_t, uint32_t);
 
 /* Memory accessing interfaces */
 
