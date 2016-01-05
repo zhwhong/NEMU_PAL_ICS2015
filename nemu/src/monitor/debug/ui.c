@@ -37,6 +37,9 @@ static int cmd_w(char *args);
 static int cmd_d(char *args);
 static int cmd_bt(char *args);
 
+void L1cache_read_debug(hwaddr_t, size_t);
+//uint32_t L1cache_read(hwaddr_t, size_t);
+
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -277,6 +280,36 @@ static int cmd_bt(char *args){
 	return 0;
 }
 
+static int cmd_L1cache(char *args) {
+	bool success;
+	int addr;
+	if (NULL == args) {
+		printf("cache ADDR 使用ADDR查找cache\n");
+		return 0;
+	}
+	addr = expr(args, &success);
+	if(false == success)
+		printf("Expression is wrong\n");
+	else
+		L1cache_read_debug(addr, 4);
+	return 0;
+}
+
+static int cmd_realL1cache(char *args) {
+	bool success;
+	int addr;
+	if (NULL == args) {
+		printf("cache ADDR 使用ADDR查找cache\n");
+		return 0;
+	}
+	addr = expr(args,&success);
+	if(false == success)
+		printf("Expression is wrong\n");
+	else
+		L1cache_read_debug(addr, 4);
+	return 0;
+}
+
 static struct {
 	char *name;
 	char *description;
@@ -291,7 +324,9 @@ static struct {
 	{"x", "Scan the memory", cmd_x},
 	{"w", "Set the watchpoint", cmd_w},
 	{"d", "Delete the watchpoint", cmd_d},
-	{"bt", "Print the stack list", cmd_bt}
+	{"bt", "Print the stack list", cmd_bt},
+	{"cache", "use cache ADDR to look up cache", cmd_L1cache},
+	{ "realcache", "similar to cache but real read addr", cmd_realL1cache}
 
 	/* TODO: Add more commands */
 
