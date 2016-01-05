@@ -5,7 +5,7 @@
 uint32_t L1cache_read(hwaddr_t, size_t);
 void L1cache_write(hwaddr_t, size_t, uint32_t);
 
-/* Memory accessing interfaces */
+/*Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	return ( L1cache_read(addr, len) & (~0u >> ((4 - len) << 3)) );
