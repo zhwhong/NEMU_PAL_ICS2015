@@ -138,3 +138,15 @@ void update_cache(hwaddr_t addr, void *data, size_t len) {
 	uint32_t col = temp.col;
 	memcpy(data, &dram[rank][bank][row][col], len);
 }
+
+void update_dram(hwaddr_t addr, void *data, size_t len) {
+	Assert(addr < HW_MEM_SIZE, "update_dram physical address %x is outside of the physical memory!", addr);
+
+	dram_addr temp;
+	temp.addr = addr & ~(len-1);
+	uint32_t rank = temp.rank;
+	uint32_t bank = temp.bank;
+	uint32_t row = temp.row;
+	uint32_t col = temp.col;
+	memcpy(&dram[rank][bank][row][col], data, len);
+}
