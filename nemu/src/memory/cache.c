@@ -2,6 +2,7 @@
 #include <time.h>
 #include "common.h"
 
+//L1cache 存储空间64KB, cache行64B, 8-way set associate, 标志位（valid）, 随机替换算法, write through, no write allocate
 #define W_WIDTH1 6
 #define Q_WIDTH1 3
 #define R_WIDTH1 7
@@ -11,14 +12,15 @@
 #define BLOCK_NUM1 (1 << Q_WIDTH1)        //8-way set associative
 #define GROUP_NUM1 (1 << R_WIDTH1)        //128 groups
 
+//L2cache 存储空间4MB, cache行64B, 16-way set associate, 标志位（valid, dirty）, 随机替换算法, write back, write allocate
 #define W_WIDTH2 6
 #define Q_WIDTH2 4
 #define R_WIDTH2 12
 #define F_WIDTH2 (27-W_WIDTH2-Q_WIDTH2-R_WIDTH2)
 
-#define BLOCK_SIZE2 (1 << W_WIDTH2)
-#define BLOCK_NUM2 (1 << Q_WIDTH2) 
-#define GROUP_NUM2 (1 << R_WIDTH2)
+#define BLOCK_SIZE2 (1 << W_WIDTH2)		  //64B
+#define BLOCK_NUM2 (1 << Q_WIDTH2) 		  //16-way set associative
+#define GROUP_NUM2 (1 << R_WIDTH2)		  //4096 groups
 
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
