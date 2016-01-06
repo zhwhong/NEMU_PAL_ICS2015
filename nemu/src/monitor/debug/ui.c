@@ -38,7 +38,7 @@ static int cmd_d(char *args);
 static int cmd_bt(char *args);
 
 void L1cache_read_debug(hwaddr_t, size_t);
-//uint32_t L1cache_read(hwaddr_t, size_t);
+extern uint32_t L1cache_read(hwaddr_t, size_t);
 
 /* We use the ``readline'' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
@@ -306,7 +306,7 @@ static int cmd_realL1cache(char *args) {
 	if(false == success)
 		printf("Expression is wrong\n");
 	else
-		L1cache_read_debug(addr, 4);
+		L1cache_read(addr, 4);
 	return 0;
 }
 
