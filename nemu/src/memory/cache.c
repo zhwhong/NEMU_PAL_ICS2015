@@ -2,44 +2,75 @@
 #include <time.h>
 #include "common.h"
 
-#define W_WIDTH 6
-#define Q_WIDTH 3
-#define R_WIDTH 7
-#define F_WIDTH (27-W_WIDTH-Q_WIDTH-R_WIDTH)
+#define W_WIDTH1 6
+#define Q_WIDTH1 3
+#define R_WIDTH1 7
+#define F_WIDTH1 (27-W_WIDTH1-Q_WIDTH1-R_WIDTH1)
 
-#define BLOCK_SIZE (1 << W_WIDTH)       //64B
-#define BLOCK_NUM (1 << Q_WIDTH)        //8-way set associative
-#define GROUP_NUM (1 << R_WIDTH)        //128 groups
+#define BLOCK_SIZE1 (1 << W_WIDTH1)       //64B
+#define BLOCK_NUM1 (1 << Q_WIDTH1)        //8-way set associative
+#define GROUP_NUM1 (1 << R_WIDTH1)        //128 groups
+
+#define W_WIDTH2 6
+#define Q_WIDTH2 4
+#define R_WIDTH2 12
+#define F_WIDTH2 (27-W_WIDTH2-Q_WIDTH2-R_WIDTH2)
+
+#define BLOCK_SIZE2 (1 << W_WIDTH2)
+#define BLOCK_NUM2 (1 << Q_WIDTH2) 
+#define GROUP_NUM2 (1 << R_WIDTH2)
 
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
 void update_cache(hwaddr_t, void *, size_t);
+void update_dram(hwaddr_t, void *, size_t);
 
 typedef union {
 	struct {
-		uint32_t w	:W_WIDTH;
-		uint32_t q 	:Q_WIDTH;
-		uint32_t r 	:R_WIDTH;
-		uint32_t f 	:F_WIDTH;
+		uint32_t w	:W_WIDTH1;
+		uint32_t q 	:Q_WIDTH1;
+		uint32_t r 	:R_WIDTH1;
+		uint32_t f 	:F_WIDTH1;
 	};
 	uint32_t addr;
-}cache_addr;
+}L1cache_addr;
 
 typedef  struct {
 	struct {
-		uint32_t q 	:Q_WIDTH;
-		uint32_t f 	:F_WIDTH;
+		uint32_t q 	:Q_WIDTH1;
+		uint32_t f 	:F_WIDTH1;
 		uint32_t valid	:1;
 	};
-	uint8_t block[BLOCK_SIZE];
-}cache_block;
+	uint8_t block[BLOCK_SIZE1];
+}L1cache_block;
 
-cache_block L1cache[GROUP_NUM][BLOCK_NUM];	
+typedef union {
+	struct {
+		uint32_t w	:W_WIDTH2;
+		uint32_t q 	:Q_WIDTH2;
+		uint32_t r 	:R_WIDTH2;
+		uint32_t f 	:F_WIDTH2;
+	};
+	uint32_t addr;
+}L2cache_addr;
+
+typedef  struct {
+	struct {
+		uint32_t q 	:Q_WIDTH2;
+		uint32_t f 	:F_WIDTH2;
+		uint32_t valid	:1;
+		uint32_t dirty	:1;
+	};
+	uint8_t block[BLOCK_SIZE2];
+}L2cache_block;
+
+L1cache_block L1cache[GROUP_NUM1][BLOCK_NUM1];	
+L2cache_block L2cache[GROUP_NUM2][BLOCK_NUM2];
 
 void init_L1cache() {
 	int i, j;
-	for(i = 0; i < GROUP_NUM; i ++) {
-		for(j = 0; j < BLOCK_NUM; j++){
+	for(i = 0; i < GROUP_NUM1; i ++) {
+		for(j = 0; j < BLOCK_NUM1; j++){
 			L1cache[i][j].valid = 0;
 		}
 	}
@@ -47,43 +78,43 @@ void init_L1cache() {
 
 uint32_t L1cache_read(hwaddr_t addr,  size_t len) {
 	int i;
-	cache_addr caddr;
+	L1cache_addr caddr;
 	caddr.addr = addr;
 	uint32_t temp;
-	for(i = 0; i < Q_WIDTH; i++) {
+	for(i = 0; i < Q_WIDTH1; i++) {
 		if (L1cache[caddr.r][i].q == caddr.q && L1cache[caddr.r][i].f == caddr.f && L1cache[caddr.r][i].valid == 1) {
-			if (len + caddr.w <= BLOCK_SIZE) {
+			if (len + caddr.w <= BLOCK_SIZE1) {
 				memcpy(&temp, &L1cache[caddr.r][i].block[caddr.w], len);
 				return temp;
 			}
 		} 
 	}
-	for(i = 0;i < Q_WIDTH; i++) {
+	for(i = 0;i < Q_WIDTH1; i++) {
 		if (L1cache[caddr.r][i].valid == 0) {
 			L1cache[caddr.r][i].q = caddr.q;
 			L1cache[caddr.r][i].f = caddr.f;
 			L1cache[caddr.r][i].valid = 1;
-			update_cache(addr, L1cache[caddr.r][i].block, BLOCK_SIZE);
+			update_cache(addr, L1cache[caddr.r][i].block, BLOCK_SIZE1);
 			return dram_read(addr, len);
 		} 
 	}
 	srand(time(0));
-	i = rand()%BLOCK_NUM;
+	i = rand()%BLOCK_NUM1;
 	L1cache[caddr.r][i].q = caddr.q;
 	L1cache[caddr.r][i].f = caddr.f;
 	L1cache[caddr.r][i].valid = 1;
-	update_cache(addr, L1cache[caddr.r][i].block, BLOCK_SIZE);
+	update_cache(addr, L1cache[caddr.r][i].block, BLOCK_SIZE1);
 	return dram_read(addr, len);
 }
 
 void L1cache_read_debug(hwaddr_t addr, size_t len){
 	int i;
-	cache_addr caddr;
+	L1cache_addr caddr;
 	caddr.addr = addr;
 	uint32_t temp;
-	for(i = 0; i < Q_WIDTH; i++) {
+	for(i = 0; i < Q_WIDTH1; i++) {
 		if (L1cache[caddr.r][i].q == caddr.q && L1cache[caddr.r][i].f == caddr.f && L1cache[caddr.r][i].valid == 1) {
-			if (len + caddr.w <= BLOCK_SIZE) {
+			if (len + caddr.w <= BLOCK_SIZE1) {
 				memcpy(&temp, &L1cache[caddr.r][i].block[caddr.w], len);
 				printf("content = %x, f = %d, q = %d\n", temp, caddr.f , caddr.q);
 				return ;
@@ -96,9 +127,9 @@ void L1cache_read_debug(hwaddr_t addr, size_t len){
 
 void L1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	int i;
-	cache_addr caddr;
+	L1cache_addr caddr;
 	caddr.addr = addr;
-	for(i = 0; i < Q_WIDTH; i++)
+	for(i = 0; i < Q_WIDTH1; i++)
 		if (L1cache[caddr.r][i].q == caddr.q && L1cache[caddr.r][i].f == caddr.f && L1cache[caddr.r][i].valid == 1) 
 			memcpy(&L1cache[caddr.r][i].block[caddr.w], &data, len);
 	dram_write(addr, len, data);
