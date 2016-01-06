@@ -284,7 +284,7 @@ static int cmd_L1cache(char *args) {
 	bool success;
 	int addr;
 	if (NULL == args) {
-		printf("cache ADDR 使用ADDR查找cache\n");
+		printf("cache ADDR  使用ADDR查找cache\n");
 		return 0;
 	}
 	addr = expr(args, &success);
@@ -299,7 +299,7 @@ static int cmd_realL1cache(char *args) {
 	bool success;
 	int addr;
 	if (NULL == args) {
-		printf("cache ADDR 使用ADDR查找cache\n");
+		printf("cache ADDR  使用ADDR查找cache\n");
 		return 0;
 	}
 	addr = expr(args,&success);
