@@ -230,8 +230,8 @@ void L2cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	 L2cache[caddr.r][i].q = caddr.q;
 	 L2cache[caddr.r][i].f = caddr.f;
 	 L2cache[caddr.r][i].valid = 1;
+	 update_cache(addr, L2cache[caddr.r][i].block, BLOCK_SIZE2);
 	 memcpy(&L2cache[caddr.r][i].block[caddr.w], &data, len);
 	 L2cache[caddr.r][i].dirty = 1;
-	 //update_cache(addr, L2cache[caddr.r][i].block, BLOCK_SIZE2);
 	 return ;
 }
