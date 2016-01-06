@@ -198,7 +198,7 @@ uint32_t L2cache_read(hwaddr_t addr,  size_t len) {
 void L2cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	int i;
 	L2cache_addr caddr;
-	L2cache_addr dram_addr;
+	//L2cache_addr dram_addr;
 	caddr.addr = addr;
 	for(i = 0; i < Q_WIDTH2; i++) {
 		if (L2cache[caddr.r][i].q == caddr.q && L2cache[caddr.r][i].f == caddr.f && L2cache[caddr.r][i].valid == 1)  {
@@ -207,8 +207,8 @@ void L2cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 			return ;
 		}
 	}
-	//dram_write(addr, len, data);
-	
+	dram_write(addr, len, data);
+	/*
 	 for(i = 0; i < Q_WIDTH2; i++) {
 	 	if (L2cache[caddr.r][i].valid == 0) {
 	 		L2cache[caddr.r][i].q = caddr.q;
@@ -236,5 +236,5 @@ void L2cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	 memcpy(&L2cache[caddr.r][i].block[caddr.w], &data, len);
 	 L2cache[caddr.r][i].dirty = 1;
 	 return ;
-	 
+	 */
 }
