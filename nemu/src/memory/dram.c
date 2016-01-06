@@ -127,7 +127,7 @@ void dram_write(hwaddr_t addr, size_t len, uint32_t data) {
 	}
 }
 
-void update_L1cache(hwaddr_t addr, void *data, size_t len) {
+void update_cache(hwaddr_t addr, void *data, size_t len) {
 	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
 
 	dram_addr temp;
