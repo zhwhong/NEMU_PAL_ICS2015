@@ -148,6 +148,7 @@ void L1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 			memcpy(&L1cache[caddr.r][i].block[caddr.w], &data, len);
 			L2cache_write(addr, len, data);
 			dram_write(addr, len, data);
+			return ;
 		}
 	}
 	L2cache_write(addr, len, data);
