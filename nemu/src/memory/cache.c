@@ -23,7 +23,7 @@
 #define BLOCK_NUM2 (1 << Q_WIDTH2) 		  //16-way set associative
 #define GROUP_NUM2 (1 << R_WIDTH2)		  //4096 groups
 */
-#define HW_MEM_SIZE (1 << 27)
+#define MEM_SIZE (1 << 27)
 
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
@@ -96,7 +96,7 @@ void init_L2cache() {
 }
 */
 static void L1burst_read(hwaddr_t addr, void *data) {
-	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
+	Assert(addr < MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
 
 	int i;
 	L1cache_addr temp;
