@@ -135,7 +135,9 @@ uint32_t L1cache_read(hwaddr_t addr,  size_t len) {
 
 	uint32_t offset = addr & BURST_MASK;
 	uint8_t temp[2 * BURST_LEN];
+
 	L1burst_read(addr, temp);
+	
 	if(offset + len > BURST_LEN){
 		L1burst_read(addr + BURST_LEN, temp + BURST_LEN);
 	}
@@ -197,7 +199,7 @@ void L1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	L1cache_addr caddr;
 	caddr.addr = addr;
 	for(i = 0; i < Q_WIDTH1; i++){
-		if (L1cache[caddr.r][i].q == caddr.q && L1cache[caddr.r][i].f == caddr.f && L1cache[caddr.r][i].valid == 1) {
+		if(L1cache[caddr.r][i].valid == 1 && L1cache[caddr.r][i].q == caddr.q && L1cache[caddr.r][i].f == caddr.f) {
 			memcpy(&L1cache[caddr.r][i].block[caddr.w], &data, len);
 			//L2cache_write(addr, len, data);
 			dram_write(addr, len, data);
