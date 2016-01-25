@@ -133,6 +133,7 @@ static void L1burst_read(hwaddr_t addr, void *data) {
 }
 
 uint32_t L1cache_read(hwaddr_t addr,  size_t len) {
+	Assert(addr < MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
 
 	uint32_t offset = addr & BURST_MASK;
 	uint8_t temp[2 * BURST_LEN];
