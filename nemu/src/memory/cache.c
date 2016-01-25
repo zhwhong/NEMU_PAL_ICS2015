@@ -23,7 +23,7 @@
 #define BLOCK_NUM2 (1 << Q_WIDTH2) 		  //16-way set associative
 #define GROUP_NUM2 (1 << R_WIDTH2)		  //4096 groups
 */
-#define MEM_SIZE (1 << 27)
+#define MEM_SIZE (1 << (W_WIDTH1 + Q_WIDTH1 + R_WIDTH1 + F_WIDTH1))
 
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);

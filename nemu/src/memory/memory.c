@@ -8,7 +8,6 @@ void L1cache_write(hwaddr_t, size_t, uint32_t);
 /*Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-	Assert(addr < (1 << 27), "physical address %x is outside of the physical memory!", addr);
 	return L1cache_read(addr, len) & (~0u >> ((4 - len) << 3));
 }
 
