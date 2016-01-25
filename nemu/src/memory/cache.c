@@ -96,7 +96,7 @@ void init_L2cache() {
 }
 */
 static void L1burst_read(hwaddr_t addr, void *data) {
-	//Assert(addr < MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
+	Assert(addr < MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
 
 	int i;
 	L1cache_addr temp;
