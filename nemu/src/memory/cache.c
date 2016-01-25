@@ -83,7 +83,7 @@ void init_L1cache() {
 void init_L2cache() {
 	int i, j;
 	for(i = 0; i < GROUP_NUM2; i ++) {
-		for(j = 0; j < BLOCK_NUM2; j ++) {
+		for(j = 0; j < BLOCK_NUM2; j ++){
 			L2cache[i][j].valid = 0;
 			L2cache[i][j].dirty = 0;
 		}
@@ -130,13 +130,12 @@ void L1cache_read_debug(hwaddr_t addr, size_t len){
 		if (L1cache[caddr.r][i].q == caddr.q && L1cache[caddr.r][i].f == caddr.f && L1cache[caddr.r][i].valid == 1) {
 			if (len + caddr.w <= BLOCK_SIZE1) {
 				memcpy(&temp, &L1cache[caddr.r][i].block[caddr.w], len);
-				printf("content = %x, f = %d, q = %d\n", temp, caddr.f , caddr.q);
+				printf("content = %x, cache组号f = %d, 组内块号q = %d\n", temp, caddr.f , caddr.q);
 				return ;
 			}
 		} 
 	}
-	printf("Can't find in the L1cache.\n");
-	return ;
+	printf("Can't find in the L1cache！！！\n");
 }
 
 void L1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
