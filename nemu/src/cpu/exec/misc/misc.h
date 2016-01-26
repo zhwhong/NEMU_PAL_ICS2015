@@ -11,11 +11,6 @@ make_helper(cld);
 make_helper(clc);
 //make_helper(cltd);
 make_helper(cwd);
-//make_helper(stos_b);
-//make_helper(stos_v);
-//make_helper(movs_b);
-//make_helper(movs_v);
-//make_helper(cmps_b);
-//make_helper(cmps_v);
+make_helper(lgdt);
 
 #endif

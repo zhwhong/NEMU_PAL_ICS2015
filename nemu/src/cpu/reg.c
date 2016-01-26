@@ -3,6 +3,7 @@
 #include <time.h>
 
 CPU_state cpu;
+SELECTOR current_sreg;
 
 const char *regsl[] = {"eax", "ecx", "edx", "ebx", "esp", "ebp", "esi", "edi"};
 const char *regsw[] = {"ax", "cx", "dx", "bx", "sp", "bp", "si", "di"};
@@ -40,7 +41,5 @@ void reg_test() {
 	assert(sample[R_EDI] == cpu.edi);
 
 	assert(eip_sample == cpu.eip);
-
-	cpu.EFLAGS = 0x00000002;		//寄存器初始值
 }
 

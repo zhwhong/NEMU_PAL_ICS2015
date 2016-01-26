@@ -25,6 +25,10 @@ static void welcome() {
 			exec_file);
 }
 
+static void init_cr0() {
+	cpu.cr0.protect_enable = 0;
+}
+
 void init_monitor(int argc, char *argv[]) {
 	/* Perform some global initialization */
 
@@ -82,6 +86,11 @@ void restart() {
 	/* Read the file with name `argv[1]' into ramdisk. */
 	init_ramdisk();
 #endif
+	/*initial EFLAGS*/
+    cpu.EFLAGS = 0x00000002;		//寄存器初始值
+
+	/*initial cr0 register */
+	init_cr0();
 
 	/* Read the entry code into memory. */
 	load_entry();

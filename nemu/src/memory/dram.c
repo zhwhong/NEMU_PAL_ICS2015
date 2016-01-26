@@ -161,7 +161,7 @@ void write_dram_with_mask(hwaddr_t addr, void *src, size_t len, uint8_t *mask) {
 	uint32_t bank = temp.bank;
 	uint32_t row = temp.row;
 	uint32_t col = temp.col;
-	for(i = 0; i < len; i ++) {
+	for(i = 0; i < len; i++) {
 		if(mask[i]) {
 			dram[rank][bank][row][col+i] = ((uint8_t *)src)[i];
 		}

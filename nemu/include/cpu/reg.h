@@ -53,9 +53,29 @@ typedef struct {
 			uint32_t reserve:15;
 		};
 	};
+	
+	struct GDTR{
+		uint32_t base_addr;
+		uint16_t seg_limit;
+	}gdtr;
+	CR0 cr0;
+	struct {
+		uint16_t cs, ds, es, ss;
+	};
 } CPU_state;
 
+typedef  union {
+	struct 
+	{
+		uint16_t rpl	:2;
+		uint16_t ti	:1;
+		uint16_t index 	:13;
+	};
+	uint16_t val;
+}SELECTOR;
+
 extern CPU_state cpu;
+extern SELECTOR current_sreg;
 
 static inline int check_reg_index(int index) {
 	assert(index >= 0 && index < 8);
