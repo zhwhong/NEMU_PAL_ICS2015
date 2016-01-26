@@ -291,7 +291,8 @@ static int cmd_L1cache(char *args) {
 	if(false == success)
 		printf("Expression is wrong\n");
 	else
-		L1cache_read_debug(addr, 4);
+		L1cache_read(addr, 4);
+		//L1cache_read_debug(addr, 4);
 	return 0;
 }
 
