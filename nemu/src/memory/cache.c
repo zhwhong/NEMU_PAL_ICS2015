@@ -105,7 +105,7 @@ static void L1burst_read(hwaddr_t addr, void *data) {
 	for(i = 0; i < Q_WIDTH1; i++) {
 		if(L1cache[temp.r][i].valid == 1 && L1cache[temp.r][i].q == temp.q && L1cache[temp.r][i].f == temp.f) {
 			/* burst read */
-			memcpy(data, &L1cache[temp.r][i].block + temp.w, BURST_LEN);
+			memcpy(data, L1cache[temp.r][i].block + temp.w, BURST_LEN);
 			return ;
 		} 
 	}
@@ -116,7 +116,7 @@ static void L1burst_read(hwaddr_t addr, void *data) {
 			L1cache[temp.r][i].f = temp.f;
 			L1cache[temp.r][i].valid = 1;
 			update_cache(addr, L1cache[temp.r][i].block, BLOCK_SIZE1);
-			memcpy(data, &L1cache[temp.r][i].block + temp.w, BURST_LEN);
+			memcpy(data, L1cache[temp.r][i].block + temp.w, BURST_LEN);
 			return ;
 			//return dram_read(addr, len);
 		} 
@@ -128,7 +128,7 @@ static void L1burst_read(hwaddr_t addr, void *data) {
 	L1cache[temp.r][i].f = temp.f;
 	L1cache[temp.r][i].valid = 1;
 	update_cache(addr, L1cache[temp.r][i].block, BLOCK_SIZE1);
-	memcpy(data, &L1cache[temp.r][i].block + temp.w, BURST_LEN);
+	memcpy(data, L1cache[temp.r][i].block + temp.w, BURST_LEN);
 	//return dram_read(addr, len);
 }
 
