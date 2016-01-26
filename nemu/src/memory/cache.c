@@ -122,7 +122,6 @@ static void L1burst_read(hwaddr_t addr, void *data) {
 			return ;
 		} 
 	}
-
 	srand(time(0));
 	i = rand()%BLOCK_NUM1;
 	L1cache[temp.r][i].q = temp.q;
@@ -227,7 +226,7 @@ void L2cache_read(hwaddr_t addr,  void *data, uint32_t r, uint32_t q) {
 			memcpy(data, L2cache[temp.r][i].block + temp.w, BURST_LEN);
 		} 
 	}
-	
+
 	srand(time(0));
 	i = rand()%BLOCK_NUM2;
 	if (L2cache[temp.r][i].dirty == 1) {
