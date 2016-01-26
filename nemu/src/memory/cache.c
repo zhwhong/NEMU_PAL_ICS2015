@@ -245,8 +245,9 @@ void L2cache_read(hwaddr_t addr,  void *data, uint32_t r, uint32_t q) {
 	memcpy(data, L2cache[temp.r][i].block + temp.w, BURST_LEN);
 }
 
-
 void L2cache_write(hwaddr_t addr, void *data, size_t len, uint8_t *mask) {
+	Assert(addr < HW_MEM_SIZE, "physical address %x is outside of the physical memory!", addr);
+	
 	int i;
 	L2cache_addr temp;
 	L2cache_addr dram_addr;
@@ -258,7 +259,6 @@ void L2cache_write(hwaddr_t addr, void *data, size_t len, uint8_t *mask) {
 			return ;
 		}
 	}
-	
 	for(i = 0; i < Q_WIDTH2; i++) {
 	 	if (L2cache[temp.r][i].valid == 0) {
 	 		L2cache[temp.r][i].q = temp.q;
