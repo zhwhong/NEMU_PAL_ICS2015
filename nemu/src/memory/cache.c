@@ -167,7 +167,6 @@ uint32_t L1cache_read(hwaddr_t addr,  size_t len) {
 	}
 	return unalign_rw(temp + offset, 4);
 }
-
 /*
 uint32_t L1cache_read(hwaddr_t addr,  size_t len) {
 	int i;
