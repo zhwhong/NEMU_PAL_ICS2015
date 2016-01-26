@@ -150,3 +150,20 @@ void update_dram(hwaddr_t addr, void *data, size_t len) {
 	uint32_t col = temp.col;
 	memcpy(&dram[rank][bank][row][col], data, len);
 }
+
+void write_dram_with_mask(hwaddr_t addr, void *src, size_t len, uint8_t *mask) {
+	Assert(addr < HW_MEM_SIZE, "update_dram physical address %x is outside of the physical memory!", addr);
+
+	int i;
+	dram_addr temp;
+	temp.addr = addr & ~(len-1);
+	uint32_t rank = temp.rank;
+	uint32_t bank = temp.bank;
+	uint32_t row = temp.row;
+	uint32_t col = temp.col;
+	for(i = 0; i < len; i ++) {
+		if(mask[i]) {
+			dram[rank][bank][row][col+i] = ((uint8_t *)src)[i];
+		}
+	}
+}
