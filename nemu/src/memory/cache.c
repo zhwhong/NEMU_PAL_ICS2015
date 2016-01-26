@@ -178,7 +178,7 @@ uint32_t L1cache_read(hwaddr_t addr,  size_t len) {
 	return L2cache_read(addr, len);
 }
 */
-/*
+
 void L1cache_read_debug(hwaddr_t addr, size_t len){
 	int i;
 	L1cache_addr caddr;
@@ -195,7 +195,7 @@ void L1cache_read_debug(hwaddr_t addr, size_t len){
 	}
 	printf("Can't find in the L1cache！！！\n");
 }
-*/
+
 void L1cache_write(hwaddr_t addr, size_t len, uint32_t data) {
 	int i;
 	L1cache_addr caddr;
