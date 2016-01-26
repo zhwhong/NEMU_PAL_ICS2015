@@ -138,29 +138,20 @@ static void L1burst_write(hwaddr_t addr, void *data, uint8_t *mask) {
 
 	int i;
 	L1cache_addr temp;
-	L1cache_addr dram_addr;
 	temp.addr = addr & ~BURST_MASK;
 
 	for(i = 0; i < Q_WIDTH1; i++) {
 		if(L1cache[temp.r][i].valid == 1 && L1cache[temp.r][i].q == temp.q && L1cache[temp.r][i].f == temp.f){
 			memcpy_with_mask(L1cache[temp.r][i].block + temp.w, data, BURST_LEN, mask);
 			//L2cache_write(addr, len, data);
-			dram_addr.q = L1cache[temp.r][i].q;
-			dram_addr.r = temp.r;
-			dram_addr.f = L1cache[temp.r][i].f;
-			dram_addr.w = temp.w;
-			write_dram_with_mask(dram_addr.addr, data, BURST_LEN, mask);
+			write_dram_with_mask(addr, data, BURST_LEN, mask);
 			//dram_write(addr, len, data);
 			return ;
 		}
 	}
 	//L2cache_write(addr, len, data);
 	//dram_write(addr, len, data);
-	dram_addr.q = L1cache[temp.r][i].q;
-	dram_addr.r = temp.r;
-	dram_addr.f = L1cache[temp.r][i].f;
-	dram_addr.w = temp.w;
-	write_dram_with_mask(dram_addr.addr, data, BURST_LEN, mask);
+	write_dram_with_mask(addr, data, BURST_LEN, mask);
 }
 
 uint32_t L1cache_read(hwaddr_t addr,  size_t len) {
