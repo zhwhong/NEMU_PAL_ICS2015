@@ -289,7 +289,7 @@ static int cmd_L1cache(char *args) {
 	}
 	addr = expr(args, &success);
 	if(false == success)
-		printf("Expression is wrong\n");
+		printf("Expression is wrong!\n");
 	else
 		L1cache_read_debug(addr, 4);
 	return 0;
@@ -302,9 +302,9 @@ static int cmd_realL1cache(char *args) {
 		printf("cache ADDR  使用ADDR查找cache\n");
 		return 0;
 	}
-	addr = expr(args,&success);
+	addr = expr(args, &success);
 	if(false == success)
-		printf("Expression is wrong\n");
+		printf("Expression is wrong!\n");
 	else
 		L1cache_read(addr, 4);
 	return 0;
