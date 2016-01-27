@@ -6,7 +6,10 @@
 static PDE kpdir[NR_PDE] align_to_page;						// kernel page directory
 static PTE kptable[PHY_MEM / PAGE_SIZE] align_to_page;		// kernel page tables
 
-inline PDE* get_kpdir() { return kpdir; }
+inline PDE* get_kpdir() 
+{ 
+	return kpdir; 
+}
 
 /* set up page tables for kernel */
 void init_page(void) {
@@ -92,7 +95,7 @@ void
 init_segment(void) {
 	memset(gdt, 0, sizeof(gdt));
 	set_segment(&gdt[SEG_KERNEL_CODE], DPL_KERNEL, SEG_EXECUTABLE | SEG_READABLE);
-	set_segment(&gdt[SEG_KERNEL_DATA], DPL_KERNEL, SEG_WRITABLE );
+	set_segment(&gdt[SEG_KERNEL_DATA], DPL_KERNEL, SEG_WRITABLE);
 
 	write_gdtr(gdt, sizeof(gdt));
 }
