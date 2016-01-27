@@ -1,6 +1,7 @@
 #include "cpu/exec/template-start.h"
 
 #define instr mov
+lnaddr_t seg_translate(swaddr_t addr, size_t len, SELECTOR current_sreg);
 
 static void do_execute() {
 	OPERAND_W(op_dest, op_src->val);
@@ -14,6 +15,8 @@ make_instr_helper(rm2r)
 
 make_helper(concat(mov_a2moffs_, SUFFIX)) {
 	swaddr_t addr = instr_fetch(eip + 1, 4);
+	current_sreg.val = cpu.ds.selector;
+	seg_translate(addr, 4, current_sreg);
 	MEM_W(addr, REG(R_EAX));
 
 	print_asm("mov" str(SUFFIX) " %%%s,0x%x", REG_NAME(R_EAX), addr);
@@ -22,6 +25,8 @@ make_helper(concat(mov_a2moffs_, SUFFIX)) {
 
 make_helper(concat(mov_moffs2a_, SUFFIX)) {
 	swaddr_t addr = instr_fetch(eip + 1, 4);
+	current_sreg.val = cpu.ds.selector;
+	seg_translate(addr, 4, current_sreg);
 	REG(R_EAX) = MEM_R(addr);
 
 	print_asm("mov" str(SUFFIX) " 0x%x,%%%s", addr, REG_NAME(R_EAX));
@@ -30,19 +35,74 @@ make_helper(concat(mov_moffs2a_, SUFFIX)) {
 
 #if DATA_BYTE == 4
 make_helper(mov_cr2r) {
-	int len = decode_r_l(eip);
+	int len = decode_rm_l(eip+1);
 	OPERAND_W(op_src, cpu.cr0.val);
-	printf("%d\n", len);
-	print_asm("mov %%%s, %%cr0", REG_NAME(R_EAX));
-	return 2+len;
+	print_asm("mov %%%s, %%cr0", REG_NAME(op_src->reg));
+	return 1+len;
 }
 
 make_helper(mov_r2cr) {
-	int len = decode_r_l(eip);
+	int len = decode_rm_l(eip+1);
 	cpu.cr0.val = op_src->val;
-	print_asm("mov %%cr0, %%%s", REG_NAME(R_EAX));
-	return 2+len;
+	print_asm("mov %%cr0, %%%s", REG_NAME(op_src->reg));
+	return 1+len;
 }
 #endif
+
+#if DATA_BYTE == 2
+make_helper(mov_seg) {
+	uint8_t opcode = instr_fetch(eip + 1, 1);
+	extern SEG_DES *seg_des;
+	SEG_DES seg;
+	seg_des  = &seg;
+	switch(opcode) {
+		case 0xd8:
+			cpu.ds.selector = reg_w(R_AX);
+			Assert(((cpu.ds.selector>>3)<<3) <= cpu.gdtr.seg_limit, "segment out limit %hd, %d", ((cpu.ds.selector>>3)<<3), cpu.gdtr.seg_limit);
+			seg_des->val_part1 = instr_fetch(cpu.gdtr.base_addr + ((cpu.ds.selector>>3)<<3), 4);
+			seg_des->val_part2 = instr_fetch(cpu.gdtr.base_addr + ((cpu.ds.selector>>3)<<3)+4, 4);
+			Assert(seg_des->P == 1, "segment error");
+			cpu.ds.seg_base1 = seg_des->seg_base1;
+			cpu.ds.seg_base2 = seg_des->seg_base2;
+			cpu.ds.seg_base3 = seg_des->seg_base3;
+			cpu.ds.seg_limit1 = seg_des->seg_limit1;
+			cpu.ds.seg_limit2 = seg_des->seg_limit2;
+			cpu.ds.seg_limit3 = 0xfff;
+			print_asm("mov %%%s, ds", REG_NAME(R_AX));
+			break;
+		case 0xc0:
+			cpu.es.selector = reg_w(R_AX);
+			Assert(((cpu.es.selector>>3)<<3) <= cpu.gdtr.seg_limit, "segment out limit %d, %d", ((cpu.es.selector>>3)<<3), cpu.gdtr.seg_limit);
+			seg_des->val_part1 = instr_fetch(cpu.gdtr.base_addr + ((cpu.es.selector>>3)<<3), 4);
+			seg_des->val_part2 = instr_fetch(cpu.gdtr.base_addr + ((cpu.es.selector>>3)<<3)+4, 4);
+			Assert(seg_des->P == 1, "segment error");
+			cpu.es.seg_base1 = seg_des->seg_base1;
+			cpu.es.seg_base2 = seg_des->seg_base2;
+			cpu.es.seg_base3 = seg_des->seg_base3;
+			cpu.es.seg_limit1 = seg_des->seg_limit1;
+			cpu.es.seg_limit2 = seg_des->seg_limit2;
+			cpu.es.seg_limit3 = 0xfff;
+			print_asm("mov %%%s, es", REG_NAME(R_AX));
+			break;
+		case 0xd0:
+			cpu.ss.selector = reg_w(R_AX);
+			Assert(((cpu.ss.selector>>3)<<3) <= cpu.gdtr.seg_limit, "segment out limit %d, %d", ((cpu.ss.selector>>3)<<3), cpu.gdtr.seg_limit);
+			seg_des->val_part1 = instr_fetch(cpu.gdtr.base_addr + ((cpu.ss.selector>>3)<<3), 4);
+			seg_des->val_part2 = instr_fetch(cpu.gdtr.base_addr + ((cpu.ss.selector>>3)<<3)+4, 4);
+			Assert(seg_des->P == 1, "segment error");
+			cpu.ss.seg_base1 = seg_des->seg_base1;
+			cpu.ss.seg_base2 = seg_des->seg_base2;
+			cpu.ss.seg_base3 = seg_des->seg_base3;
+			cpu.ss.seg_limit1 = seg_des->seg_limit1;
+			cpu.ss.seg_limit2 = seg_des->seg_limit2;
+			cpu.ss.seg_limit3 = 0xfff;
+			print_asm("mov %%%s, ss", REG_NAME(R_AX));
+			break;
+		default:
+			break;
+	}
+	return 2;
+}
+#endif 
 
 #include "cpu/exec/template-end.h"

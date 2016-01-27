@@ -4,6 +4,7 @@ make_helper(exec);
 
 make_helper(rep) {
 	int len;
+	int result;
 	int count = 0;
 	if(instr_fetch(eip + 1, 1) == 0xc3) {
 		/* repz ret */
@@ -12,7 +13,7 @@ make_helper(rep) {
 	}
 	else {
 		while(cpu.ecx) {
-			exec(eip + 1);
+			result = exec(eip + 1);
 			count ++;
 			cpu.ecx --;
 			assert(ops_decoded.opcode == 0xa4	// movsb
@@ -26,6 +27,8 @@ make_helper(rep) {
 				);
 
 			/* TODO: Jump out of the while loop if necessary. */
+			if (result == 0) 
+				break;
 
 		}
 		len = 1;
