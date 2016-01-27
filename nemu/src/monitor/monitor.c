@@ -1,4 +1,5 @@
 #include "nemu.h"
+#include "../memory/TLB.h"
 
 #define ENTRY_START 0x100000
 
@@ -27,11 +28,19 @@ static void welcome() {
 
 static void init_cr0() {
 	cpu.cr0.protect_enable = 0;
+	cpu.cr0.paging = 0;
 }
 
 static void init_seg() {
 	cpu.cs.seg_base = 0x0;
 	cpu.cs.seg_limit = 0xffffffff;
+}
+
+static void init_tlb() {
+	int i;
+	for(i = 0; i < TLB_NUM; i++) {
+		tlb[i].valid = false;
+	}
 }
 
 void init_monitor(int argc, char *argv[]) {
@@ -100,6 +109,9 @@ void restart() {
 	/*initial seg register */
 	init_seg();
 
+	/*initial tlb */
+	init_tlb();
+
 	/* Read the entry code into memory. */
 	load_entry();
 
@@ -109,7 +121,7 @@ void restart() {
 	/* Initialize DRAM. */
 	init_ddr3();
 
-	/* Initialize L1 cache*/
+	/* Initialize cache*/
 	init_L1cache();
 	init_L2cache();
 }

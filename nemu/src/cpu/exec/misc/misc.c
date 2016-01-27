@@ -66,6 +66,12 @@ make_helper(clc)
 	return 1;
 }
 
+make_helper(std) {
+	cpu.DF = 1;
+	print_asm("std");
+	return 1;
+}
+
 make_helper(cwd)
 {
 	if(!ops_decoded.is_data_size_16)

@@ -15,10 +15,13 @@ void ramdisk_read(uint8_t *, uint32_t, uint32_t);
 
 void create_video_mapping();
 uint32_t get_ucr3();
+PDE* get_updir();
+PDE* get_kpdir();
 
 uint32_t loader() {
 	Elf32_Ehdr *elf;
 	Elf32_Phdr *ph = NULL;
+	PDE *kpdir, *updir;
 	int i;
 	uint8_t buf[4096];
 
@@ -44,6 +47,11 @@ uint32_t loader() {
 
 		/* Scan the program header table, load each segment into memory */
 		if(ph->p_type == PT_LOAD) {
+			//nemu_assert(get_ucr3()>>12 == 0x136);
+			mm_malloc(ph->p_vaddr, ph->p_memsz);
+			kpdir = get_kpdir();
+			updir = get_updir();
+			kpdir[32].val = updir[32].val;
 
 			/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
@@ -53,8 +61,8 @@ uint32_t loader() {
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
 			 */
-			 memset((void *)(ph->p_vaddr+ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
 
+			 memset((void *)(ph->p_vaddr+ph->p_filesz), 0, ph->p_memsz - ph->p_filesz);
 #ifdef IA32_PAGE
 			/* Record the program break for future use. */
 			extern uint32_t brk;

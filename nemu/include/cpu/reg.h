@@ -53,12 +53,13 @@ typedef struct {
 			uint32_t reserve:15;
 		};
 	};
-	
+
 	struct GDTR{
 		uint32_t base_addr;
 		uint16_t seg_limit;
 	}gdtr;
 	CR0 cr0;
+	CR3 cr3;
 	struct {
 		uint16_t selector;
 		union {
